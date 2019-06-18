@@ -26,7 +26,7 @@ const LN10 = Math.LN10;
 const LOG2E = Math.LOG2E;
 const LOG10E = Math.LOG10E;
 let mobile;
-let innerWidth = innerHeight = null;
+let innerWidth = (innerHeight = null);
 
 let fr = 30;
 
@@ -226,18 +226,16 @@ function Vector2(x, y) {
     }
   };
 
-  this.Add = function(x, y) {
+  this.Add = function(vec2) {
     if (x == null && y == null) {
-      console.log(
-        "No X or Y value has been passed to the Vector2 Add function"
-      );
+      console.log("No vector has been passed to the Vector2 Add function");
     } else {
       this.previousX = this.x;
       this.previousY = this.y;
 
-      if (x != null) this.x += x;
+      this.x += vec2.x;
 
-      if (y != null) this.y += y;
+      this.y += vec2.y;
     }
   };
 
@@ -439,11 +437,13 @@ function include(file) {
   document.head.appendChild(script);
 }
 
-function screenshot(){
-   let d = document.createElement("a");
-   let number = floor(random(100000));
-   let down = number + ".png";
-   d.setAttribute("download", down);
-   d.href = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-   d.click();
- }
+function screenshot() {
+  let d = document.createElement("a");
+  let number = floor(random(100000));
+  let down = number + ".png";
+  d.setAttribute("download", down);
+  d.href = canvas
+    .toDataURL("image/png")
+    .replace(/^data:image\/[^;]/, "data:application/octet-stream");
+  d.click();
+}
