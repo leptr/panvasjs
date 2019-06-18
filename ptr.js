@@ -352,6 +352,14 @@ function log(x) {
   console.log(x);
 }
 
+function error(err) {
+  console.error(err);
+}
+
+function warn(w) {
+  console.warn(w);
+}
+
 function wait(x) {
   setTimeout(null, x);
 }
