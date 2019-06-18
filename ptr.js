@@ -277,14 +277,14 @@ function Vector2(x, y) {
 
 function random(a, b) {
   if (a == null && b == null) return Math.random();
-  else if (b != null) return Math.random() * a + (b - a);
+  else if (b != null) return Math.random() * (b - a) + a;
   else return Math.random() * a;
 }
 
 function randInt(a, b) {
   if (a == null && b == null)
     error("At least one argument is needed for the randInt function");
-  else if (b != null) return Math.floor(Math.random() * a + (b - a));
+  else if (b != null) return Math.floor(Math.random() * (b - a) + a);
   else return Math.floor(Math.random() * a);
 }
 
