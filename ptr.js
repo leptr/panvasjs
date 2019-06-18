@@ -28,7 +28,7 @@ const LOG10E = Math.LOG10E;
 let mobile;
 let innerWidth = (innerHeight = null);
 
-let fr = 30;
+let fr = 60;
 
 function framerate(x) {
   if (x == null) {
