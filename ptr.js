@@ -276,12 +276,16 @@ function Vector2(x, y) {
 }
 
 function random(a, b) {
-  if (a == null && b == null) {
-    log("At least one argument is needed for the random function");
-  } else {
-    if (b != null) return Math.random() * a + (b - a);
-    else return Math.random() * a;
-  }
+  if (a == null && b == null) return Math.random();
+  else if (b != null) return Math.random() * a + (b - a);
+  else return Math.random() * a;
+}
+
+function randInt(a, b) {
+  if (a == null && b == null)
+    error("At least one argument is needed for the randInt function");
+  else if (b != null) return Math.floor(Math.random() * a + (b - a));
+  else return Math.floor(Math.random() * a);
 }
 
 function floor(num) {
