@@ -31,7 +31,7 @@ let innerWidth, innerHeight;
 let fr = 60;
 
 function framerate(framerate) {
-  if (framerate == null || typeof(framerate) !== "number") {
+  if (framerate == null || typeof framerate !== "number") {
     error("Invalid argument for framerate function");
   } else {
     clearInterval(interval);
@@ -206,7 +206,13 @@ function circle(x, y, r) {
 }
 
 function fillText(text, x, y, fontSize, fontName) {
-  if (text == null || x == null || y == null || fontSize == null || fontName == null)
+  if (
+    text == null ||
+    x == null ||
+    y == null ||
+    fontSize == null ||
+    fontName == null
+  )
     error("Invalid arguments for fillText function");
   else {
     canvas.getContext("2d").font = fontSize.toString() + "px " + fontName;
@@ -214,8 +220,14 @@ function fillText(text, x, y, fontSize, fontName) {
   }
 }
 
-function strokeText(text == null || x == null || y == null || fontSize == null || fontName == null) {
-  if (!text || !x || !y || !fontSize || !fontName)
+function strokeText(text, x, y, fontSize, fontName) {
+  if (
+    text == null ||
+    x == null ||
+    y == null ||
+    fontSize == null ||
+    fontName == null
+  )
     error("Invalid arguments for strokeText function");
   else {
     canvas.getContext("2d").font = fontSize.toString() + "px " + fontName;
