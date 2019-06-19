@@ -30,12 +30,12 @@ let innerWidth, innerHeight;
 
 let fr = 60;
 
-function framerate(x) {
-  if (x == null) {
-    error("Please specify the framerate in framerate function");
+function framerate(framerate) {
+  if (framerate == null || typeof(framerate) !== "number") {
+    error("Invalid argument for framerate function");
   } else {
     clearInterval(interval);
-    fr = x;
+    fr = framerate;
     interval = setInterval(loop, 1000 / fr);
   }
 }
@@ -49,7 +49,7 @@ function playPause() {
   }
 }
 
-window.onload = function() {
+window.onload = () => {
   mobile = isMobile();
   innerWidth = window.innerWidth;
   innerHeight = window.innerHeight;
@@ -64,7 +64,7 @@ function loop() {
 
 function createCanvas(w, h) {
   if (w == null && h == null) {
-    error("Function createCanvas requires at least one attribute");
+    error("Function createCanvas requires at least one argument");
   } else {
     if (h != null) {
       this.width = w;
@@ -88,7 +88,7 @@ function createCanvas(w, h) {
 
 function setSize(w, h) {
   if (w == null && h == null) {
-    error("setSize function requires at least one attribute");
+    error("setSize function requires at least one argument");
   } else {
     if (h != null) {
       canvas.width = w;
@@ -206,7 +206,7 @@ function circle(x, y, r) {
 }
 
 function fillText(text, x, y, fontSize, fontName) {
-  if (!text || !x || !y || !fontSize || !fontName)
+  if (text == null || x == null || y == null || fontSize == null || fontName == null)
     error("Invalid arguments for fillText function");
   else {
     canvas.getContext("2d").font = fontSize.toString() + "px " + fontName;
@@ -214,7 +214,7 @@ function fillText(text, x, y, fontSize, fontName) {
   }
 }
 
-function strokeText(text, x, y, fontSize, fontName) {
+function strokeText(text == null || x == null || y == null || fontSize == null || fontName == null) {
   if (!text || !x || !y || !fontSize || !fontName)
     error("Invalid arguments for strokeText function");
   else {
