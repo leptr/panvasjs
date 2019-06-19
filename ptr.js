@@ -32,7 +32,7 @@ let fr = 60;
 
 function framerate(x) {
   if (x == null) {
-    console.log("Please specify the framerate in framerate function");
+    error("Please specify the framerate in framerate function");
   } else {
     clearInterval(interval);
     fr = x;
@@ -64,7 +64,7 @@ function loop() {
 
 function createCanvas(w, h) {
   if (w == null && h == null) {
-    console.log("Function createCanvas requires at least one attribute");
+    error("Function createCanvas requires at least one attribute");
   } else {
     if (h != null) {
       this.width = w;
@@ -88,7 +88,7 @@ function createCanvas(w, h) {
 
 function setSize(w, h) {
   if (w == null && h == null) {
-    log("setSize function requires at least one attribute");
+    error("setSize function requires at least one attribute");
   } else {
     if (h != null) {
       canvas.width = w;
@@ -112,7 +112,7 @@ function background(r, g, b) {
     (r == null && g == null && b == null) ||
     (r != null && g != null && b == null)
   ) {
-    console.log("Invalid attributes for background function");
+    error("Invalid attributes for background function");
   } else {
     if (g == null && b == null) {
       this.green = this.blue = this.red = r;
@@ -132,7 +132,7 @@ function fill(r, g, b) {
     (r == null && g == null && b == null) ||
     (r != null && g != null && b == null)
   ) {
-    console.log("Invalid attributes for fill function");
+    error("Invalid attributes for fill function");
   } else {
     if (g == null && b == null) {
       this.green = this.blue = this.red = r;
@@ -152,7 +152,7 @@ function stroke(r, g, b) {
     (r == null && g == null && b == null) ||
     (r != null && g != null && b == null)
   ) {
-    console.log("Invalid attributes for stroke function");
+    error("Invalid attributes for stroke function");
   } else {
     if (g == null && b == null) {
       this.green = this.blue = this.red = r;
@@ -168,16 +168,19 @@ function stroke(r, g, b) {
 }
 
 function line(x1, y1, x2, y2) {
-  let ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
+  if (!x1 || !x2 || !y1 || !y2) error("Invalid arguments for line function");
+  else {
+    let ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
 }
 
 function rectangle(x, y, w, h) {
   if (w == null && h == null) {
-    console.log("Invalid dimensions for rectangle function");
+    error("Invalid dimensions for rectangle function");
   } else {
     this.x = x;
     this.y = y;
@@ -190,7 +193,7 @@ function rectangle(x, y, w, h) {
 
 function circle(x, y, r) {
   if (r == null) {
-    console.log("Invalid radius for circle function");
+    error("Invalid radius for circle function");
   } else {
     this.x = x;
     this.y = y;
@@ -199,6 +202,24 @@ function circle(x, y, r) {
     canvas.getContext("2d").beginPath();
     canvas.getContext("2d").arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     canvas.getContext("2d").fill();
+  }
+}
+
+function fillText(text, x, y, fontSize, fontName) {
+  if (!text || !x || !y || !fontSize || !fontName)
+    error("Invalid arguments for fillText function");
+  else {
+    canvas.getContext("2d").font = fontSize.toString() + "px " + fontName;
+    canvas.getContext("2d").fillText(text, x, y);
+  }
+}
+
+function strokeText(text, x, y, fontSize, fontName) {
+  if (!text || !x || !y || !fontSize || !fontName)
+    error("Invalid arguments for strokeText function");
+  else {
+    canvas.getContext("2d").font = fontSize.toString() + "px " + fontName;
+    canvas.getContext("2d").strokeText(text, x, y);
   }
 }
 
@@ -214,9 +235,7 @@ function Vector2(x, y) {
 
   this.Set = function(x, y) {
     if (x == null && y == null) {
-      console.log(
-        "No X or Y value has been passed to the Vector2 Set function"
-      );
+      error("No X or Y value has been passed to the Vector2 Set function");
     } else {
       this.previousX = x;
       this.previousX = y;
@@ -228,7 +247,7 @@ function Vector2(x, y) {
 
   this.Add = function(vec2) {
     if (x == null && y == null) {
-      console.log("No vector has been passed to the Vector2 Add function");
+      error("No vector has been passed to the Vector2 Add function");
     } else {
       this.previousX = this.x;
       this.previousY = this.y;
