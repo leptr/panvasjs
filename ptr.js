@@ -26,7 +26,7 @@ const LN10 = Math.LN10;
 const LOG2E = Math.LOG2E;
 const LOG10E = Math.LOG10E;
 let mobile;
-let innerWidth = (innerHeight = null);
+let innerWidth, innerHeight;
 
 let fr = 60;
 
