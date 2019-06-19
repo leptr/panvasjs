@@ -223,6 +223,13 @@ function strokeText(text, x, y, fontSize, fontName) {
   }
 }
 
+function textAlign(align) {
+  if (!align) error("You need to specify the text alignment");
+  else {
+    canvas.getContext("2d").textAlign = align;
+  }
+}
+
 function Vector2(x, y) {
   this.x = 0;
   this.y = 0;
