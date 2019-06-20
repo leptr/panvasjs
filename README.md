@@ -1,4 +1,4 @@
-# Ptr.js 2.0
+# Ptr.js
 
 ## A framework for JavaScript canvas
 
