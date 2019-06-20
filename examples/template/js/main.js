@@ -1,7 +1,7 @@
 function setup() {
-  // your setup code
+  // setup code
 }
 
 function update() {
-  // your loop
+  // loop code
 }
