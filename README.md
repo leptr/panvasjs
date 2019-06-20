@@ -6,17 +6,17 @@
 
 ## Variables
 
-**mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
-**Width** and **Height** - contain the width and height of the canvas element
-**innerWidth** and **innerHeight** - contain the innner width and inner height of the browser window
-**PI** - Pi constant
-**E** - Euler's constant
-**SQRT2** - square root of 2
-**SQRT1_2** - square root of 1/2
-**LN2** - natural logarithm of 2
-**LN10** - natural logarithm of 10
-**LOG2E** - base 2 logarithm of e
-**LOG10E** - base 10 logarithm of e
+- **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
+- **Width** and **Height** - contain the width and height of the canvas element
+- **innerWidth** and **innerHeight** - contain the innner width and inner height of the browser window
+- **PI** - Pi constant
+- **E** - Euler's constant
+- **SQRT2** - square root of 2
+- **SQRT1_2** - square root of 1/2
+- **LN2** - natural logarithm of 2
+- **LN10** - natural logarithm of 10
+- **LOG2E** - base 2 logarithm of e
+- **LOG10E** - base 10 logarithm of e
 
 ## Functions
 
