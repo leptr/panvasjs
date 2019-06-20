@@ -29,7 +29,7 @@ let mobile;
 let innerWidth, innerHeight;
 let can;
 let fr = 60;
-let interval;
+let interval = undefined;
 
 window.addEventListener("ready", () => {
   if (typeof preload === "function") preload();
@@ -52,10 +52,12 @@ function framerate(framerate) {
   if (framerate && typeof framerate !== "number") {
     error("Invalid argument for framerate function");
   } else {
-    if (interval) clearInterval(interval);
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
     fr = framerate;
     interval = setInterval(loop, 1000 / fr);
-    return fr;
   }
 }
 
@@ -202,13 +204,13 @@ function Canvas(width, height) {
     else this.rectDrawMode = mode;
   };
 
-  this.circle = (x, y, radius) => {
-    if (x === null || y === null || radius === null) {
+  this.circle = (x, y, r) => {
+    if (x === null || y === null || r === null) {
       error("Invalid arguments for canvas circle function");
     } else {
       let x1 = x;
       let y1 = y;
-      let radius = radius;
+      let radius = r;
 
       this.ctx.beginPath();
       this.ctx.arc(x1, y1, radius, 0, PI * 2);
@@ -272,7 +274,7 @@ function Canvas(width, height) {
       clearInterval(interval);
       interval = null;
     } else {
-      interval = setInterval(loop, fr);
+      framerate(fr);
     }
   };
 

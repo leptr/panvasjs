@@ -20,7 +20,7 @@
 
 ## Functions
 
-- `framerate(newFramerate)` - changes the framerate and returns the new value; if no value has been passed to the function, it will just return the current framerate
+- `framerate(newFramerate)` - changes the framerate to the new one
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
 - `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
 - `randInt(num1, num2)` - same as random(), except it returns a whole number; you must provide at least one argument
