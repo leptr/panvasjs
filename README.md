@@ -92,17 +92,17 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `restore()` - restores the last saved state of the canvas
 - `screenshot()` - takes a screenshot of the canvas and saves it as a png file; the background color is not included in the screenshot
 - `playPause()` - either stops or restarts the main loop depending on its state
-- `drawImage(image, sx, sy, swidth, sheight, x, y, width, height)` - draws an image on the canvas;
+- `drawImage(image, sx, sy, swidth, sheight, x, y, width, height)` - draws an image on the canvas; Arguments:
 
-* image - an image object
-* sx (optional) - x value from which the cropping of the image starts
-* sy (optional) - y value from which the cropping of the image starts
-* swidth (optional) - width of the crop
-* sheight (optional) - height of the crop
-* x - x coordinate of the canvas from which the image starts drawing
-* y - y coordinate of the canvas from which the image starts drawing
-* width (optional) - width of the image on the canvas; if left blank, it will be displayed in its full size
-* height (optional) - height of the image on the canvas; if left blank, it will be displayed in its full size
+1. image - an image object
+2. sx (optional) - x value from which the cropping of the image starts
+3. sy (optional) - y value from which the cropping of the image starts
+4. swidth (optional) - width of the crop
+5. sheight (optional) - height of the crop
+6. x - x coordinate of the canvas from which the image starts drawing
+7. y - y coordinate of the canvas from which the image starts drawing
+8. width (optional) - width of the image on the canvas; if left blank, it will be displayed in its full size
+9. height (optional) - height of the image on the canvas; if left blank, it will be displayed in its full size
 
 ### Image
 
