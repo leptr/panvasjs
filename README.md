@@ -1,4 +1,4 @@
-# Ptr.js
+# Ptr.js (pronounced Peter)
 
 ## A framework for JavaScript canvas
 
