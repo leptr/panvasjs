@@ -60,7 +60,7 @@
 
 ## Classes
 
-### Canvas
+## Canvas
 
 Class Canvas is the main class of the framework. When an instance is created, it creates a canvas element and appends it to the document body. An instance can be created by calling the `createCanvas()` function. Example: `let canvas = createCanvas(400, 400);`
 
@@ -104,7 +104,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 8. width (optional) - width of the image on the canvas; if left blank, it will be displayed in its full size
 9. height (optional) - height of the image on the canvas; if left blank, it will be displayed in its full size
 
-### Image
+## Image
 
 Takes a path to the image as an argument.
 
@@ -114,7 +114,7 @@ Takes a path to the image as an argument.
 - **filename** - contains the name of the image file
 - **image** - contains the image element
 
-### Point
+## Point
 
 A point on the canvas
 
@@ -127,7 +127,7 @@ A point on the canvas
 
 - `distance(point2)` - returns the distance to the given point
 
-### Vector
+## Vector
 
 A 2D Vector object
 
