@@ -17,6 +17,7 @@
 - **LN10** - natural logarithm of 10
 - **LOG2E** - base 2 logarithm of e
 - **LOG10E** - base 10 logarithm of e
+- **frameCount** - contains the number of frames that have passed since the loop started running
 
 ## Functions
 
@@ -127,6 +128,7 @@ A point on the canvas
 ### Methods
 
 - `distance(point2)` - returns the distance to the given point
+- `isOffScreen()` - returns true if the point is off the screen to any side; translating the canvas affects its work
 
 ## Vector
 

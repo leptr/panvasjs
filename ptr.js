@@ -30,6 +30,7 @@ let innerWidth, innerHeight;
 let can;
 let fr = 60;
 let interval = undefined;
+let frameCount = 0;
 
 window.addEventListener("ready", () => {
   if (typeof preload === "function") preload();
@@ -44,6 +45,7 @@ window.addEventListener("load", () => {
 });
 
 function loop() {
+  frameCount++;
   can.ctx.clearRect(-Width, -Height, Width * 2, Height * 2);
   update();
 }
@@ -434,9 +436,9 @@ function Vector(x, y) {
 
   this.isOffScreen = () => {
     if (
-      this.x > canvas.width ||
+      this.x >= canvas.width ||
       this.x < 0 ||
-      this.y > canvas.height ||
+      this.y >= canvas.height ||
       this.y < 0
     )
       return true;
@@ -464,6 +466,17 @@ function Point(x, y) {
         (this.x - pt2.x) * (this.x - pt2.x) +
           (this.y - pt2.y) * (this.y - pt2.y)
       );
+  };
+
+  this.isOffScreen = () => {
+    if (
+      this.x >= canvas.width ||
+      this.x < 0 ||
+      this.y >= canvas.height ||
+      this.y < 0
+    )
+      return true;
+    else return false;
   };
 }
 
