@@ -125,7 +125,7 @@ A point on the canvas
 
 ### Methods
 
-- `distance(point2)` - returns the distance from itself to the given point
+- `distance(point2)` - returns the distance to the given point
 
 ### Vector
 
