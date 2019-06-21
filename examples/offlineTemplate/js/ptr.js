@@ -31,8 +31,6 @@ let can;
 let frameRate = 60;
 let interval = undefined;
 let frameCount = 0;
-let maxWidth = 100000;
-let maxHeight = 100000;
 let hasACanvas = true;
 
 function Canvas(width, height) {
@@ -49,15 +47,31 @@ function Canvas(width, height) {
 
   this.ctx = this.canvas.getContext("2d"); //getting the canvas context
 
-  can = this.canvas;
-  can.ctx = this.ctx;
+  can = this;
 
   this.canvas.width = this.width; //setting width
   this.canvas.height = this.height; //setting height
 
   interval = setInterval(loop, 1000 / frameRate);
 
+  this.maxWidth = 99000;
+  this.maxHeight = 99000;
+
   this.rectDrawMode = "corner";
+
+  this.clear = () => {
+    this.ctx.clearRect(
+      -this.maxWidth / 3,
+      -this.maxHeight / 3,
+      (this.maxWidth / 3) * 2,
+      (this.maxHeight / 3) * 2
+    );
+  };
+
+  this.setMaxSize = (width, height) => {
+    this.maxWidth = width;
+    this.maxHeight = height;
+  };
 
   this.setSize = (width, height) => {
     if (width === undefined && height === undefined) {
@@ -92,14 +106,14 @@ function Canvas(width, height) {
         g === undefined &&
         b === undefined &&
         a === undefined) ||
-      (r !== undefined && g !== undefined && b !== undefined && a === undefined)
+      (r !== undefined && g !== undefined && b === undefined && a === undefined)
     ) {
       error("Invalid arguments for canvas fill function");
     } else {
       let red = r;
-      let green = g || r;
-      let blue = b || r;
-      let alpha = a / 255 || 1;
+      let green = g === undefined ? r : g;
+      let blue = b === undefined ? r : b;
+      let alpha = a === undefined ? 1 : a / 255;
 
       let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")"; //creating a string with the imputed color
       this.ctx.fillStyle = col;
@@ -121,9 +135,9 @@ function Canvas(width, height) {
       error("Invalid arguments for canvas stroke function");
     } else {
       let red = r;
-      let green = g || r;
-      let blue = b || r;
-      let alpha = a / 255 || 1;
+      let green = g === undefined ? r : g;
+      let blue = b === undefined ? r : b;
+      let alpha = a === undefined ? 1 : a / 255;
 
       let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")"; //creating a string with the imputed color
       this.ctx.strokeStyle = col;
@@ -298,14 +312,6 @@ function Canvas(width, height) {
   };
 }
 
-function Image(path) {
-  this.path = path;
-  this.filename = this.path.split("/").pop();
-
-  this.image = document.createElement("IMG");
-  this.image.src = this.path;
-}
-
 function Vector(x, y) {
   this.x = 0;
   this.y = 0;
@@ -470,6 +476,14 @@ function Point(x, y) {
       return true;
     else return false;
   };
+}
+
+function Image(path) {
+  this.path = path;
+  this.filename = this.path.split("/").pop();
+
+  this.image = document.createElement("IMG");
+  this.image.src = this.path;
 }
 
 function createVector(x, y) {
@@ -734,12 +748,6 @@ function noCanvas() {
 
 function loop() {
   frameCount++;
-  if (hasACanvas)
-    can.ctx.clearRect(
-      -maxWidth / 3,
-      -maxHeight / 3,
-      (maxWidth / 3) * 2,
-      (maxHeight / 3) * 2
-    );
+  if (hasACanvas) can.clear();
   if (typeof update === "function") update();
 }

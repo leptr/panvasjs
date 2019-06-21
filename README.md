@@ -81,12 +81,16 @@ Class Canvas is the main class of the framework. When an instance is created, it
 
 - **width** - contains the width of the canvas; it can also be accessed through the Width global variable
 - **height** - contains the height of the canvas; it can also be accessed through the Height global variable
+- **maxWidth** - maximum canvas width; by default set to 99.000, from -33.000 to + 66.000
+- **maxHeight** - maximum canvas height; by default set to 99.000, from -33.000 to + 66.000
 - **canvas** - points to the actual canvas element that is displayed in the document
 - **ctx** - contains the context of the canvas element
 
 ### Methods
 
-- `setSize(newWidth, newHeight)` - changes the dimensions of the canvas to the new dimensions; also updates the Width and Height global variables
+- `setMaxSize(newMaxWidth, newMaxHeight)` - sets the new maximum width and height of the canvas; can take one argument, in which case both maxWidth and maxHeight are set to that value
+- `setSize(newWidth, newHeight)` - changes the dimensions of the canvas to the new dimensions; also updates the Width and Height global variables; can take one argument, in which case both width and height are set to that value
+- `clear()` - clears the whole canvas; called by default at every frame
 - `background(r, g, b)` - changes the canvas background color to the given RGB values; if only one value is passed to the method, that value is taken as the red, green, and blue value
 - `fill(r, g, b, a)` - changes the fill color of the canvas; if only one value is passed to the method, that value is taken as the red, green, and blue value, and alpha is set to 255; to set the alpha value, you must pass all four arguments; alpha ranges from 0 to 255
 - `noFill()` - removes the fill
@@ -169,3 +173,5 @@ A 2D Vector object
 - `distance(vector2)` - returns the distance to the given vector
 - `isOffScreen()` - returns true if the vector is off the screen to any side; translating the canvas affects its work
 - `lerp(vector2, step)` - lerp - Linear Interpolation - smooth transitioning between current values to the values of the given vector with the provided step
+
+## You can check out the example folder for some examples of code usage
