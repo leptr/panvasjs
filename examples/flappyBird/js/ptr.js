@@ -446,6 +446,13 @@ function Vector(x, y) {
     this.x = (1 - step) * this.x + step * vec2.x;
     this.y = (1 - step) * this.y + step * vec2.y;
   };
+
+  this.constrain = (minX, maxX, minY, maxY) => {
+    if (this.x >= maxX) this.x = maxX;
+    else if (this.x <= minX) this.x = minX;
+    if (this.y >= maxY) this.y = maxY;
+    else if (this.y <= minY) this.y = minY;
+  };
 }
 
 Vector.__proto__.fromAngle = angle => {

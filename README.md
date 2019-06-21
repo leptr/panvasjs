@@ -173,5 +173,6 @@ A 2D Vector object
 - `distance(vector2)` - returns the distance to the given vector
 - `isOffScreen()` - returns true if the vector is off the screen to any side; translating the canvas affects its work
 - `lerp(vector2, step)` - lerp - Linear Interpolation - smooth transitioning between current values to the values of the given vector with the provided step
+- `constrain(minX, maxX, minY, maxY)` - constrains vector between given values
 
 ## You can check out the example folder for some examples of code usage
