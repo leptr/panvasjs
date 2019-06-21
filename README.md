@@ -9,6 +9,7 @@
 - **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
 - **Width** and **Height** - contain the width and height of the canvas element
 - **innerWidth** and **innerHeight** - contain the innner width and inner height of the browser window
+- **mouseX** and **mouseY** - contain the current coordinates of the mouse on the screen
 - **PI** - Pi constant
 - **E** - Euler's constant
 - **SQRT2** - square root of 2
@@ -18,9 +19,14 @@
 - **LOG2E** - base 2 logarithm of e
 - **LOG10E** - base 10 logarithm of e
 - **frameCount** - contains the number of frames that have passed since the loop started running
+- **frameRate** - contains the current number of frames per second
 
 ## Functions
 
+- `setup()` - main function when the documents has been fully loaded
+- `update()` - main function called 60 times per second by default; can be changed using the framerate function
+- `preload()` - runs before anything else; useful for preloading images
+- `noCanvas()` - creates a project without a canvas that still uses the update and setup functions
 - `framerate(newFramerate)` - changes the framerate to the new one
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
 - `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
@@ -58,7 +64,12 @@
 - `createVector(x, y)` - returns a Vector object with the given x and y values
 - `createCanvas(widht, height)` - returns a Canvas object wit the given width and height values
 - `Vector.fromAngle(angle)` - returns a Vector object generated from the given angle
-- `preload()` - runs its code before anything else; useful for preloading images or other files
+- `constrain(num, min, max)` - constrains the given number between the min and the max values and returns the value
+- `lerp(value1, value2, step)` - lerp - Linear Interpolation - smooth transitioning between two values with the step given
+- `joinArray(array, spacing)` - returns a string of all the elements in the array divided by the spacing; spacing is optional, if there is none, it will return the string of all the elements concatenated without spacing
+- `removeChars(text, characters)` - takes two strings as an output; string characters contains all the characters that you want removed from the original string and returns the result
+- `removeCharAt(text, index)` - removes the character at the given index from the given string and returns the result
+- `replaceCharAt(text, index, replacement)` - replaces the character at the given index from the given string with the given replacement and returns the result
 
 ## Classes
 
@@ -90,6 +101,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `textAlign(alignment)` - sets the alignment for the displayed text; takes a string for an input; valid values are "start", "end", "left", "right", "center"
 - `translate(x, y)` - translates the canvas starting point to the given coordinates
 - `rotate(angle)` - rotates the canvas by the given angle
+- `scale(widthScale, heightScale)` - scales the canvas proportionate to the given arguments; if only one argument is given, both width and height are scaled in proportion to that one argument; if no arguments are passed, canvas is returned to scale 1
 - `save()` - saves the current state of the canvas
 - `restore()` - restores the last saved state of the canvas
 - `screenshot()` - takes a screenshot of the canvas and saves it as a png file; the background color is not included in the screenshot
@@ -156,3 +168,4 @@ A 2D Vector object
 - `normalize()` - normalizes the vector (sets its magnitude to 1)
 - `distance(vector2)` - returns the distance to the given vector
 - `isOffScreen()` - returns true if the vector is off the screen to any side; translating the canvas affects its work
+- `lerp(vector2, step)` - lerp - Linear Interpolation - smooth transitioning between current values to the values of the given vector with the provided step

@@ -28,40 +28,12 @@ const LOG10E = Math.LOG10E;
 let mobile;
 let innerWidth, innerHeight;
 let can;
-let fr = 60;
+let frameRate = 60;
 let interval = undefined;
 let frameCount = 0;
-
-window.addEventListener("ready", () => {
-  if (typeof preload === "function") preload();
-});
-
-window.addEventListener("load", () => {
-  mobile = isMobile();
-  innerWidth = window.innerWidth;
-  innerHeight = window.innerHeight;
-  if (typeof onMobile === "function" && mobile) onMobile();
-  setup();
-});
-
-function loop() {
-  frameCount++;
-  can.ctx.clearRect(-Width, -Height, Width * 2, Height * 2);
-  update();
-}
-
-function framerate(framerate) {
-  if (framerate && typeof framerate !== "number") {
-    error("Invalid argument for framerate function");
-  } else {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
-    }
-    fr = framerate;
-    interval = setInterval(loop, 1000 / fr);
-  }
-}
+let maxWidth = 100000;
+let maxHeight = 100000;
+let hasACanvas = true;
 
 function Canvas(width, height) {
   this.width = width || 100;
@@ -83,12 +55,12 @@ function Canvas(width, height) {
   this.canvas.width = this.width; //setting width
   this.canvas.height = this.height; //setting height
 
-  interval = setInterval(loop, 1000 / fr);
+  interval = setInterval(loop, 1000 / frameRate);
 
   this.rectDrawMode = "corner";
 
   this.setSize = (width, height) => {
-    if (width == null && height == null) {
+    if (width === undefined && height === undefined) {
       error("setSize function requires at least one argument");
     } else {
       this.canvas.width = width;
@@ -100,8 +72,8 @@ function Canvas(width, height) {
 
   this.background = (r, g, b) => {
     if (
-      (r == null && g == null && b == null) ||
-      (r != null && g != null && b == null)
+      (r === undefined && g === undefined && b === undefined) ||
+      (r !== undefined && g !== undefined && b === undefined)
     ) {
       error("Invalid arguments for canvas background function");
     } else {
@@ -116,8 +88,11 @@ function Canvas(width, height) {
 
   this.fill = (r, g, b, a) => {
     if (
-      (r === null && g === null && b === null && a === null) ||
-      (r !== null && g !== null && b !== null && a === null)
+      (r === undefined &&
+        g === undefined &&
+        b === undefined &&
+        a === undefined) ||
+      (r !== undefined && g !== undefined && b !== undefined && a === undefined)
     ) {
       error("Invalid arguments for canvas fill function");
     } else {
@@ -137,8 +112,11 @@ function Canvas(width, height) {
 
   this.stroke = (r, g, b, a) => {
     if (
-      (r == null && g == null && b == null && a === null) ||
-      (r != null && g != null && b == null && a === null)
+      (r === undefined &&
+        g === undefined &&
+        b === undefined &&
+        a === undefined) ||
+      (r !== undefined && g !== undefined && b === undefined && a === undefined)
     ) {
       error("Invalid arguments for canvas stroke function");
     } else {
@@ -161,7 +139,12 @@ function Canvas(width, height) {
   };
 
   this.line = (x1, y1, x2, y2) => {
-    if (x1 === null || x2 === null || y1 === null || y2 === null)
+    if (
+      x1 === undefined ||
+      x2 === undefined ||
+      y1 === undefined ||
+      y2 === undefined
+    )
       error("Invalid arguments for canvas line function");
     else {
       this.ctx.beginPath();
@@ -172,17 +155,22 @@ function Canvas(width, height) {
   };
 
   this.rect = (x, y, width, height) => {
-    if (x == null && y == null && width == null && height == null) {
+    if (
+      x === undefined &&
+      y === undefined &&
+      width === undefined &&
+      height === undefined
+    ) {
       error("Invalid arguments for rectangle function");
     } else {
       let x1 = x;
       let y1 = y;
       let wid, heig;
-      if (width == null && height == null) {
+      if (width === undefined && height === undefined) {
         y1 = x1;
         wid = y;
         heig = width;
-      } else if (width != null && height == null) {
+      } else if (width !== undefined && height === undefined) {
         wid = width;
         heig = wid;
       } else {
@@ -207,7 +195,7 @@ function Canvas(width, height) {
   };
 
   this.circle = (x, y, r) => {
-    if (x === null || y === null || r === null) {
+    if (x === undefined || y === undefined || r === undefined) {
       error("Invalid arguments for canvas circle function");
     } else {
       let x1 = x;
@@ -223,11 +211,11 @@ function Canvas(width, height) {
 
   this.text = (text, x, y, fontSize, fontName) => {
     if (
-      text == null ||
-      x == null ||
-      y == null ||
-      fontSize == null ||
-      fontName == null
+      text === undefined ||
+      x === undefined ||
+      y === undefined ||
+      fontSize === undefined ||
+      fontName === undefined
     )
       error("Invalid arguments for canvas text function");
     else {
@@ -260,6 +248,13 @@ function Canvas(width, height) {
     this.ctx.restore();
   };
 
+  this.scale = (width, height) => {
+    let wid = width || 1;
+    let heig = height || wid;
+
+    this.ctx.scale(wid, heig);
+  };
+
   this.screenshot = () => {
     let d = document.createElement("a");
     let number = randInt(999999);
@@ -276,12 +271,12 @@ function Canvas(width, height) {
       clearInterval(interval);
       interval = null;
     } else {
-      framerate(fr);
+      framerate(frameRate);
     }
   };
 
   this.drawImage = (image, sx, sy, swidth, sheight, x, y, wid, heig) => {
-    if (image === null)
+    if (image === undefined)
       error("Invalid arguments for canvas drawImage function");
     else {
       if (swidth === undefined) this.ctx.drawImage(image.image, sx, sy);
@@ -303,10 +298,6 @@ function Canvas(width, height) {
   };
 }
 
-function createCanvas(width, height) {
-  return new Canvas(width, height);
-}
-
 function Image(path) {
   this.path = path;
   this.filename = this.path.split("/").pop();
@@ -322,23 +313,23 @@ function Vector(x, y) {
   this.previousX = 0;
   this.previousY = 0;
 
-  if (x != null) this.x = x;
-  if (y != null) this.y = y;
+  if (x !== undefined) this.x = x;
+  if (y !== undefined) this.y = y;
 
   this.set = (x, y) => {
-    if (x == null && y == null) {
+    if (x === undefined && y === undefined) {
       error("No X or Y value has been passed to the Vector set function");
     } else {
       this.previousX = x;
       this.previousX = y;
-      if (x != null) this.x = x;
+      if (x !== undefined) this.x = x;
 
-      if (y != null) this.y = y;
+      if (y !== undefined) this.y = y;
     }
   };
 
   this.add = vec2 => {
-    if (x == null && y == null) {
+    if (x === undefined && y === undefined) {
       error("No vector has been passed to the Vector add function");
     } else {
       this.previousX = this.x;
@@ -351,7 +342,7 @@ function Vector(x, y) {
   };
 
   this.subtract = vec2 => {
-    if (x == null && y == null) {
+    if (x === undefined && y === undefined) {
       error("No vector has been passed to the Vector subtract function");
     } else {
       this.previousX = this.x;
@@ -425,7 +416,7 @@ function Vector(x, y) {
   };
 
   this.distance = vec2 => {
-    if (vec2 === null)
+    if (vec2 === undefined)
       error("You need to pass another vector to he Vector distance method");
     else
       return sqrt(
@@ -444,22 +435,23 @@ function Vector(x, y) {
       return true;
     else return false;
   };
+
+  this.lerp = (vec2, step) => {
+    this.x = (1 - step) * this.x + step * vec2.x;
+    this.y = (1 - step) * this.y + step * vec2.y;
+  };
 }
 
 Vector.__proto__.fromAngle = angle => {
   return new Vector(cos(angle), sin(angle));
 };
 
-function createVector(x, y) {
-  return new Vector(x, y);
-}
-
 function Point(x, y) {
   this.x = x;
   this.y = y;
 
   this.distance = pt2 => {
-    if (pt2 === null)
+    if (pt2 === undefined)
       error("You need to pass another point to the Point distance method");
     else
       return sqrt(
@@ -480,26 +472,93 @@ function Point(x, y) {
   };
 }
 
+function createVector(x, y) {
+  return new Vector(x, y);
+}
+function createCanvas(width, height) {
+  return new Canvas(width, height);
+}
+
+function framerate(framerate) {
+  if (framerate && typeof framerate !== "number") {
+    error("Invalid argument for framerate function");
+  } else {
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+    frameRate = framerate;
+    interval = setInterval(loop, 1000 / frameRate);
+  }
+}
+
+function constrain(num, min, max) {
+  if (num < min) return min;
+  if (num > max) return max;
+  return num;
+}
+
+function lerp(value1, value2, step) {
+  return (1 - step) * value1 + step * value2;
+}
+
 function map(num, a, b, c, d) {
   return ((num - a) / (b - a)) * (d - c) + c;
 }
 
+function joinArray(array, spacing) {
+  if (!array) error("Invalid arguments for joinArray function");
+  else {
+    let result = "";
+    for (let item of array) {
+      result += item;
+      if (spacing) result += spacing;
+    }
+
+    return result;
+  }
+}
+
+function removeChars(text, characters) {
+  for (let i = 0; i < text.length; i++) {
+    for (let char of characters) {
+      if (text[i] === char) text = removeCharAt(text, i);
+    }
+  }
+  return text;
+}
+
+function replaceCharAt(text, index, replacement) {
+  let split = text.split("");
+  split[index] = replacement;
+  string = joinArray(split);
+  return string;
+}
+
+function removeCharAt(text, index) {
+  let string = text;
+  let split = string.split("");
+  split.splice(index, 1);
+  string = joinArray(split);
+  return string;
+}
+
 function random(a, b) {
-  if (a === null && b === null) return Math.random();
+  if (a === undefined && b === undefined) return Math.random();
   else {
     if (a.constructor === Array) {
       let i = Math.floor(Math.random() * a.length);
       return a[i];
     }
-    if (b != null) return Math.random() * (b - a) + a;
+    if (b !== undefined) return Math.random() * (b - a) + a;
     else return Math.random() * a;
   }
 }
 
 function randInt(a, b) {
-  if (a == null && b == null)
+  if (a === undefined && b === undefined)
     error("At least one argument is needed for the randInt function");
-  else if (b != null) return Math.floor(Math.random() * (b - a) + a);
+  else if (b !== undefined) return Math.floor(Math.random() * (b - a) + a);
   else return Math.floor(Math.random() * a);
 }
 
@@ -628,8 +687,8 @@ window.addEventListener("touchend", e => {
 
 window.addEventListener("mousedown", e => {
   if (!mobile) {
-    mouseX = e.mouseX;
-    mouseY = e.mouseY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     if (typeof mouseDown === "function") {
       mouseDown();
     }
@@ -638,8 +697,8 @@ window.addEventListener("mousedown", e => {
 
 window.addEventListener("mousemove", e => {
   if (!mobile) {
-    mouseX = e.mouseX;
-    mouseY = e.mouseY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     if (typeof mouseMove === "function") {
       mouseMove();
     }
@@ -648,10 +707,39 @@ window.addEventListener("mousemove", e => {
 
 window.addEventListener("mouseup", e => {
   if (!mobile) {
-    mouseX = e.mouseX;
-    mouseY = e.mouseY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     if (typeof mouseUp === "function") {
       mouseUp();
     }
   }
 });
+
+window.addEventListener("ready", () => {
+  if (typeof preload === "function") preload();
+});
+
+window.addEventListener("load", () => {
+  mobile = isMobile();
+  innerWidth = window.innerWidth;
+  innerHeight = window.innerHeight;
+  if (typeof onMobile === "function" && mobile) onMobile();
+  setup();
+});
+
+function noCanvas() {
+  interval = setInterval(loop, 1000 / frameRate);
+  hasACanvas = false;
+}
+
+function loop() {
+  frameCount++;
+  if (hasACanvas)
+    can.ctx.clearRect(
+      -maxWidth / 3,
+      -maxHeight / 3,
+      (maxWidth / 3) * 2,
+      (maxHeight / 3) * 2
+    );
+  if (typeof update === "function") update();
+}
