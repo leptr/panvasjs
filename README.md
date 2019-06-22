@@ -61,9 +61,17 @@
 - `mouseDown()` - activates when the left mouse button is clicked; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `mouseMove()` - activates when the left mouse button is held down and mouse is moving; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `mouseUp()` - activates when the left mouse button is released; the mouse coordinates can be accessed through the mouseX and mouseY variables
+- `swipeUp()` - called when user swipes up on a touchscreen device
+- `swipeDown()` - called when user swipes down on a touchscreen device
+- `swipeLeft()` - called when user swipes left on a touchscreen device
+- `swipeRight()` - called when user swipes right on a touchscreen device
 - `createVector(x, y)` - returns a Vector object with the given x and y values
+- `randomVector()` - returns a random Vector object with a magnitude of 1
+- `createPoint(x, y)` - returns a Point object with the given x and y values
+- `randomPoint()` - returns a random Point object
 - `createCanvas(widht, height)` - returns a Canvas object wit the given width and height values
 - `Vector.fromAngle(angle)` - returns a Vector object generated from the given angle
+- `distance(x1, y1, x2, y2)` - returns the distance between given coordinates; only two arguments can be passed in which case both of them must be either of Vector or Point class and their distance will be returned; you can find the distance between two points, two vectors, or a point and a vector
 - `constrain(num, min, max)` - constrains the given number between the min and the max values and returns the value
 - `lerp(value1, value2, step)` - lerp - Linear Interpolation - smooth transitioning between two values with the step given
 - `joinArray(array, spacing)` - returns a string of all the elements in the array divided by the spacing; spacing is optional, if there is none, it will return the string of all the elements concatenated without spacing
@@ -101,6 +109,9 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `rect(x, y, width, height)` - draws a rectangle starting at the given coordinates with the given dimensions; only two arguments can be passed, in which case x and y are set to the first number, and width and height are set to the second number
 - `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are "center" or "corner"
 - `circle(x, y, radius)` - draws a circle at the given coordinates with the given radius
+- `beginShape(x, y)` - starts drawing a new shape at the given coordinates
+- `vertex(x, y)` - adds another point to the new shape at the given coordinates
+- `closeShape()` - closes the new shape
 - `text(text, x, y, fontSize, fontName)` - displays the given text on the canvas at the given coordinates; fontSize is an integer, fontName is a string
 - `textAlign(alignment)` - sets the alignment for the displayed text; takes a string for an input; valid values are "start", "end", "left", "right", "center"
 - `translate(x, y)` - translates the canvas starting point to the given coordinates
@@ -109,7 +120,9 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `save()` - saves the current state of the canvas
 - `restore()` - restores the last saved state of the canvas
 - `screenshot()` - takes a screenshot of the canvas and saves it as a png file; the background color is not included in the screenshot
-- `playPause()` - either stops or restarts the main loop depending on its state
+- `playPause()` - switches between states of playin and paused
+- `pause()` - pauses the loop if it is unpaused
+- `play()` - unpauses the loop if it is paused
 - `drawImage(image, sx, sy, swidth, sheight, x, y, width, height)` - draws an image on the canvas; Arguments:
 
 1. image - an image object

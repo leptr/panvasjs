@@ -32,6 +32,7 @@ let frameRate = 60;
 let interval = undefined;
 let frameCount = 0;
 let hasACanvas = true;
+let touchX, touchY, prevTouchX, prevTouchY;
 
 function Canvas(width, height) {
   this.width = width || 100;
@@ -220,7 +221,30 @@ function Canvas(width, height) {
       this.ctx.arc(x1, y1, radius, 0, PI * 2);
       this.ctx.fill();
       this.ctx.stroke();
+      this.ctx.closePath();
     }
+  };
+
+  this.beginShape = (x, y) => {
+    if (x === undefined)
+      error("Invalid arguments for Canvas beginShape method");
+    else {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+    }
+  };
+
+  this.vertex = (x, y) => {
+    if (x === undefined) error("Invalid arguments for Canvas vertex method");
+    else {
+      this.ctx.lineTo(x, y);
+    }
+  };
+
+  this.closeShape = () => {
+    this.ctx.closePath();
+    this.ctx.stroke();
+    this.ctx.fill();
   };
 
   this.text = (text, x, y, fontSize, fontName) => {
@@ -247,10 +271,17 @@ function Canvas(width, height) {
   };
 
   this.translate = (x, y) => {
-    this.ctx.translate(x, y);
+    if (x === undefined) error("Invalid arguments for Canvas translate method");
+    else {
+      if (y === undefined) {
+        y = x;
+      }
+      this.ctx.translate(x, y);
+    }
   };
 
   this.rotate = angle => {
+    if (angle === undefined) angle = 0;
     this.ctx.rotate((angle * PI) / 180);
   };
 
@@ -287,6 +318,15 @@ function Canvas(width, height) {
     } else {
       framerate(frameRate);
     }
+  };
+
+  this.pause = () => {
+    clearInterval(interval);
+    interval = null;
+  };
+
+  this.play = () => {
+    framerate(frameRate);
   };
 
   this.drawImage = (image, sx, sy, swidth, sheight, x, y, wid, heig) => {
@@ -424,11 +464,7 @@ function Vector(x, y) {
   this.distance = vec2 => {
     if (vec2 === undefined)
       error("You need to pass another vector to he Vector distance method");
-    else
-      return sqrt(
-        (this.x - vec2.x) * (this.x - vec2.x) +
-          (this.y - vec2.y) * (this.y - vec2.y)
-      );
+    else return sqrt(sqr(this.x - vec2.x) + sqr(this.y - vec2.y));
   };
 
   this.isOffScreen = () => {
@@ -466,11 +502,7 @@ function Point(x, y) {
   this.distance = pt2 => {
     if (pt2 === undefined)
       error("You need to pass another point to the Point distance method");
-    else
-      return sqrt(
-        (this.x - pt2.x) * (this.x - pt2.x) +
-          (this.y - pt2.y) * (this.y - pt2.y)
-      );
+    else return sqrt(sqr(this.x - pt2.x) + sqr(this.y - pt2.y));
   };
 
   this.isOffScreen = () => {
@@ -493,11 +525,45 @@ function Image(path) {
   this.image.src = this.path;
 }
 
+function distance(x1, y1, x2, y2) {
+  if (!x1 && !y1) error("Invalid arguments for dist function");
+  else {
+    if (x2 === undefined && y2 === undefined) {
+      if (
+        x1 instanceof Vector ||
+        (x1 instanceof Point && y1 instanceof Vector) ||
+        y1 instanceof Point
+      ) {
+        return sqrt(sqr(x1.x - y1.x) + sqr(x1.y - y1.y));
+      } else error("Invalid arguments for dist function");
+    } else {
+      return sqrt(sqr(x1 - x2) + sqr(y1 - y2));
+    }
+  }
+}
+
 function createVector(x, y) {
   return new Vector(x, y);
 }
+
+function randomVector() {
+  let x = randInt(-10, 10);
+  let y = randInt(-10, 10);
+  let vec = createVector(x, y);
+  vec.normalize();
+  return vec;
+}
+
 function createCanvas(width, height) {
   return new Canvas(width, height);
+}
+
+function createPoint(x, y) {
+  return new Point(x, y);
+}
+
+function randomPoint() {
+  return new Point(randInt(Width), randInt(Height));
 }
 
 function framerate(framerate) {
@@ -564,23 +630,24 @@ function removeCharAt(text, index) {
   return string;
 }
 
-function random(a, b) {
-  if (a === undefined && b === undefined) return Math.random();
+function random(num1, num2) {
+  if (num1 === undefined && num2 === undefined) return Math.random();
   else {
-    if (a.constructor === Array) {
-      let i = Math.floor(Math.random() * a.length);
-      return a[i];
+    if (num1.constructor === Array) {
+      let i = Math.floor(Math.random() * num1.length);
+      return num1[i];
     }
-    if (b !== undefined) return Math.random() * (b - a) + a;
-    else return Math.random() * a;
+    if (num2 !== undefined) return Math.random() * (num2 - num1) + num1;
+    else return Math.random() * num1;
   }
 }
 
-function randInt(a, b) {
-  if (a === undefined && b === undefined)
+function randInt(num1, num2) {
+  if (num1 === undefined && num2 === undefined)
     error("At least one argument is needed for the randInt function");
-  else if (b !== undefined) return Math.floor(Math.random() * (b - a) + a);
-  else return Math.floor(Math.random() * a);
+  else if (num2 !== undefined)
+    return Math.floor(Math.random() * (num2 - num1) + num1);
+  else return Math.floor(Math.random() * num1);
 }
 
 function floor(num) {
@@ -687,6 +754,11 @@ window.addEventListener("keyup", e => {
 
 window.addEventListener("touchstart", e => {
   let touches = e.touches;
+  touchX = touches[0].clientX;
+  touchY = touches[0].clientY;
+  startTouchX = touchX;
+  startTouchY = touchY;
+  calledFunction = false;
   if (typeof touchStart === "function") {
     touchStart(touches);
   }
@@ -694,6 +766,25 @@ window.addEventListener("touchstart", e => {
 
 window.addEventListener("touchmove", e => {
   let touches = e.touches;
+  touchX = touches[0].clientX;
+  touchY = touches[0].clientY;
+  let distX = startTouchX - touchX;
+  let distY = startTouchY - touchY;
+  //log(distX + " " + distY);
+  if (distX >= 100 && distY <= 10 && distY >= -10 && !calledFunction) {
+    calledFunction = true;
+    if (typeof swipeRight === "function") swipeRight();
+  } else if (distX <= -100 && distY <= 10 && distY >= -10 && !calledFunction) {
+    calledFunction = true;
+    if (typeof swipeLeft === "function") swipeLeft();
+  } else if (distY <= -100 && distX <= 10 && distX >= -10 && !calledFunction) {
+    calledFunction = true;
+    if (typeof swipeDown === "function") swipeDown();
+  } else if (distY >= 100 && distX <= 10 && distX >= -10 && !calledFunction) {
+    calledFunction = true;
+    if (typeof swipeUp === "function") swipeUp();
+  }
+
   if (typeof touchMove === "function") {
     touchMove(touches);
   }
