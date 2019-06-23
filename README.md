@@ -209,4 +209,4 @@ A 2D Vector object
 ```
 
 - The lowest available version is 2.0
-- The latest version is 2.0
+- The latest version is 2.0.1
