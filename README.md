@@ -1,4 +1,4 @@
-# Ptr.js (pronounced Peter)
+# PtrJS (pronounced Peter)
 
 ## A framework for JavaScript canvas
 
@@ -189,3 +189,13 @@ A 2D Vector object
 - `constrain(minX, maxX, minY, maxY)` - constrains vector between given values
 
 ## You can check out the example folder for some examples of code usage
+
+## Creating a new PtrJS project
+
+- To create a new PtrJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.
+
+- You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:
+  https://cdn.petarmijailovic.com/ptrjs/<version>/ptr.js or https://cdn.petarmijailovic.com/ptrjs/<version>/ptr.min.js
+
+- The lowest available version is 2.0
+- The latest version is 2.0
