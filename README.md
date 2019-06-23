@@ -197,7 +197,7 @@ A 2D Vector object
 - You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:
   https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js
 
-- To use the latest version type "latest" as the version in the URL
+- To use the latest version use the following URL: https://cdn.petarmijailovic.com/ptrjs/latest/ptr.min.js
 
 - The lowest available version is 2.0
 - The latest version is 2.0
