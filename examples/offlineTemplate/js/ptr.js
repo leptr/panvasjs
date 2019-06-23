@@ -85,6 +85,10 @@ function Canvas(width, height) {
     }
   };
 
+  this.fullScreen = () => {
+    this.setSize(innerWidth, innerHeight);
+  };
+
   this.background = (r, g, b) => {
     if (
       (r === undefined && g === undefined && b === undefined) ||
@@ -162,6 +166,45 @@ function Canvas(width, height) {
     )
       error("Invalid arguments for canvas line function");
     else {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x1, y1);
+      this.ctx.lineTo(x2, y2);
+      this.ctx.stroke();
+    }
+  };
+
+  this.lineFromVector = vector => {
+    if (!vector || !(vector instanceof Vector))
+      error("Invalid argument for Canvas lineFromVector method");
+    else {
+      let x1 = vector.x;
+      let y1 = vector.y;
+
+      let theta = vector.angle(true);
+      let length = vector.magnitude();
+
+      let x2 = length * cos(theta) + x1;
+      let y2 = length * sin(theta) + y1;
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(x1, y1);
+      this.ctx.lineTo(x2, y2);
+      this.ctx.stroke();
+    }
+  };
+
+  this.lineFromAngle = (x, y, angle, length) => {
+    if (x === undefined)
+      error("Invalid arguments for Canvas lineFromAngle method");
+    else {
+      let x1 = x;
+      let y1 = y;
+      let theta = angle;
+      let len = length;
+
+      let x2 = len * cos(theta) + x1;
+      let y2 = len * sin(theta) + y1;
+
       this.ctx.beginPath();
       this.ctx.moveTo(x1, y1);
       this.ctx.lineTo(x2, y2);
@@ -414,9 +457,8 @@ function Vector(x, y) {
   };
 
   this.angle = degrees => {
-    if (degrees)
-      return (acos(this.x / pow(sqr(this.x) + sqr(this.y), -1)) * 180) / PI;
-    else return acos(this.x / pow(sqr(this.x) + sqr(this.y), -1));
+    if (degrees) return (atan(this.y / this.x) * 180) / PI;
+    return atan(this.y / this.x);
   };
 
   this.rotate = angle => {
@@ -424,7 +466,7 @@ function Vector(x, y) {
     this.previousY = this.y;
 
     this.x = cos(angle) * this.previousX - sin(angle) * this.previousY;
-    this.y = sin(angle) * this.previousX - cos(angle) * this.previousY;
+    this.y = sin(angle) * this.previousX + cos(angle) * this.previousY;
   };
 
   this.magnitude = () => {
@@ -526,7 +568,7 @@ function Image(path) {
 }
 
 function distance(x1, y1, x2, y2) {
-  if (!x1 && !y1) error("Invalid arguments for dist function");
+  if (!x1 && !y1) error("Invalid arguments for distance function");
   else {
     if (x2 === undefined && y2 === undefined) {
       if (
@@ -546,11 +588,12 @@ function createVector(x, y) {
   return new Vector(x, y);
 }
 
-function randomVector() {
-  let x = randInt(-10, 10);
-  let y = randInt(-10, 10);
+function randomVector(magnitude) {
+  let x = randInt(Width);
+  let y = randInt(Height);
   let vec = createVector(x, y);
-  vec.normalize();
+  if (magnitude !== undefined) vec.setMagnitude(magnitude);
+  else vec.normalize();
   return vec;
 }
 
@@ -628,6 +671,22 @@ function removeCharAt(text, index) {
   split.splice(index, 1);
   string = joinArray(split);
   return string;
+}
+
+function sort(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        swap(array, j, j + 1);
+      }
+    }
+  }
+}
+
+function swap(array, index1, index2) {
+  let temp = array[index1];
+  array[index1] = array[index2];
+  array[index2] = temp;
 }
 
 function random(num1, num2) {

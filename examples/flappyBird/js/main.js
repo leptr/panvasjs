@@ -7,8 +7,8 @@ let score;
 let ended = false;
 
 function setup() {
-  canvas = createCanvas(innerWidth, innerHeight);
-  if (!mobile) canvas.setSize(400, 600);
+  canvas = createCanvas(400, 600);
+  if (mobile) canvas.fullScreen();
   canvas.background(55, 194, 233);
 
   gravity = createVector(0, 0.5);

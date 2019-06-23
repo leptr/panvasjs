@@ -66,12 +66,14 @@
 - `swipeLeft()` - called when user swipes left on a touchscreen device
 - `swipeRight()` - called when user swipes right on a touchscreen device
 - `createVector(x, y)` - returns a Vector object with the given x and y values
-- `randomVector()` - returns a random Vector object with a magnitude of 1
+- `randomVector(magnitude)` - returns a random Vector object; magnitude is an optional argument; if provided, the returned vector will have the given magnitude, otherwise, the magnitude is set to 1
 - `createPoint(x, y)` - returns a Point object with the given x and y values
 - `randomPoint()` - returns a random Point object
 - `createCanvas(widht, height)` - returns a Canvas object wit the given width and height values
 - `Vector.fromAngle(angle)` - returns a Vector object generated from the given angle
 - `distance(x1, y1, x2, y2)` - returns the distance between given coordinates; only two arguments can be passed in which case both of them must be either of Vector or Point class and their distance will be returned; you can find the distance between two points, two vectors, or a point and a vector
+- `swap(array, index1, index2)` - swaps the two array elements at the given indexes
+- `sort(array)` - sorts the array
 - `constrain(num, min, max)` - constrains the given number between the min and the max values and returns the value
 - `lerp(value1, value2, step)` - lerp - Linear Interpolation - smooth transitioning between two values with the step given
 - `joinArray(array, spacing)` - returns a string of all the elements in the array divided by the spacing; spacing is optional, if there is none, it will return the string of all the elements concatenated without spacing
@@ -98,6 +100,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 
 - `setMaxSize(newMaxWidth, newMaxHeight)` - sets the new maximum width and height of the canvas; can take one argument, in which case both maxWidth and maxHeight are set to that value
 - `setSize(newWidth, newHeight)` - changes the dimensions of the canvas to the new dimensions; also updates the Width and Height global variables; can take one argument, in which case both width and height are set to that value
+- `fullScreen()` - makes the canvas take the whole window
 - `clear()` - clears the whole canvas; called by default at every frame
 - `background(r, g, b)` - changes the canvas background color to the given RGB values; if only one value is passed to the method, that value is taken as the red, green, and blue value
 - `fill(r, g, b, a)` - changes the fill color of the canvas; if only one value is passed to the method, that value is taken as the red, green, and blue value, and alpha is set to 255; to set the alpha value, you must pass all four arguments; alpha ranges from 0 to 255
@@ -106,6 +109,8 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `noStroke()` - removes the stroke
 - `lineWidth(width)` - changes the stroke line width
 - `line(x1, y1, x2, y2)` - draws a line from (x1, y1) to (x2, y2); lineWidth function affects it
+- `lineFromVector(vector)` - draws a line from a vector
+- `lineFromAngle(x, y, angle, length)` - draws a line from an angle in degrees at the given coordinates with the provided length
 - `rect(x, y, width, height)` - draws a rectangle starting at the given coordinates with the given dimensions; only two arguments can be passed, in which case x and y are set to the first number, and width and height are set to the second number
 - `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are "center" or "corner"
 - `circle(x, y, radius)` - draws a circle at the given coordinates with the given radius
