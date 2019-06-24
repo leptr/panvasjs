@@ -1,8 +1,8 @@
 function Pipe() {
-  this.margin = floor(Height / 4);
-  this.x = Width;
-  this.y = randInt(this.margin, Height - this.margin * 2);
-  this.speed = Width / 200;
+  this.margin = floor(height / 4);
+  this.x = width;
+  this.y = randInt(this.margin, height - this.margin * 2);
+  this.speed = width / 200;
   this.passed = false;
 
   this.width = (this.margin / 4) * 3;
@@ -14,7 +14,7 @@ function Pipe() {
       this.x,
       this.y + this.margin,
       this.width,
-      Height - this.margin - this.y
+      height - this.margin - this.y
     );
   };
 

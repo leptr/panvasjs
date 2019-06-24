@@ -1,9 +1,9 @@
 function Bird() {
-  this.pos = createVector(Width / 10, Height / 2);
-  this.r = Height / 45;
+  this.pos = createVector(width / 10, height / 2);
+  this.r = height / 45;
 
   this.force = createVector(0, 0);
-  this.maxForce = Height / 65;
+  this.maxForce = height / 65;
 
   this.jump = () => {
     this.force.set(0, -this.maxForce);
@@ -24,8 +24,8 @@ function Bird() {
     if (this.pos.y - this.r <= 0) {
       this.pos.y = 1 + this.r;
       this.force.set(0, -1);
-    } else if (this.pos.y + this.r >= Height) {
-      this.pos.y = Height - this.r - 1;
+    } else if (this.pos.y + this.r >= height) {
+      this.pos.y = height - this.r - 1;
       this.force.set(0, 0);
     }
     this.show();

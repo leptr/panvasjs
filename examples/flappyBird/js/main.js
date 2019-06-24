@@ -13,7 +13,7 @@ function setup() {
 
   gravity = createVector(0, 0.5);
 
-  pipeSpace = (Width / 5) * 3;
+  pipeSpace = (width / 5) * 3;
 
   set();
 }
@@ -43,12 +43,12 @@ function update() {
       }
     }
   }
-  if (pipes[pipes.length - 1].x <= Width - pipeSpace) pipes.push(new Pipe());
+  if (pipes[pipes.length - 1].x <= width - pipeSpace) pipes.push(new Pipe());
   if (pipes[0].x == -pipes[0].width) pipes.splice(0, 1);
 
   canvas.textAlign("center");
   canvas.fill(255);
-  canvas.text(score, Width / 2, 40, 30, "Arial");
+  canvas.text(score, width / 2, 40, 30, "Arial");
 }
 
 function keyDown() {
@@ -77,7 +77,7 @@ function gameOver() {
   canvas.clear();
   ended = true;
   canvas.fill(255);
-  canvas.text("GAME OVER", Width / 2, Height / 2, 60, "Arial");
+  canvas.text("GAME OVER", width / 2, height / 2, 60, "Arial");
   let message = mobile ? "Tap the screen to restart" : "Press SPACE to restart";
-  canvas.text(message, Width / 2, Height / 2 + 40, 30, "Arial");
+  canvas.text(message, width / 2, height / 2 + 40, 30, "Arial");
 }
