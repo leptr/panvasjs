@@ -94,8 +94,8 @@ Class Canvas is the main class of the framework. When an instance is created, it
 
 ### Attributes
 
-- **width** - contains the width of the canvas; it can also be accessed through the Width global variable
-- **height** - contains the height of the canvas; it can also be accessed through the Height global variable
+- **width** - contains the width of the canvas; it can also be accessed through the width global variable
+- **height** - contains the height of the canvas; it can also be accessed through the height global variable
 - **maxWidth** - maximum canvas width; by default set to 99.000, from -33.000 to + 66.000
 - **maxHeight** - maximum canvas height; by default set to 99.000, from -33.000 to + 66.000
 - **canvas** - points to the actual canvas element that is displayed in the document
@@ -209,7 +209,7 @@ A 2D Vector object
 - You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:
   https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js
 
-- To use the latest version add the following line of code into your head tag
+- To use the latest version, add the following line of code into your head tag
 
 ```
 <script src="https://cdn.petarmijailovic.com/ptrjs/latest/ptr.min.js"></script>
