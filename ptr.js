@@ -16,8 +16,10 @@ function isMobile() {
 
 let keyCode, mouseX, mouseY;
 let touches = [];
-let Width, Height;
+let width, height;
 const PI = Math.PI;
+const TWO_PI = 2 * PI;
+const HALF_PI = PI / 2;
 const E = Math.E;
 const SQRT2 = Math.SQRT2;
 const SQRT1_2 = Math.SQRT1_2;
@@ -34,12 +36,12 @@ let frameCount = 0;
 let hasACanvas = true;
 let touchX, touchY, prevTouchX, prevTouchY;
 
-function Canvas(width, height) {
-  this.width = width || 100;
-  this.height = height || this.width;
+function Canvas(width_, height_) {
+  this.width = width_ || 100;
+  this.height = height_ || this.width;
 
-  Width = this.width;
-  Height = this.height;
+  width = this.width;
+  height = this.height;
 
   this.background = 51;
 
@@ -69,19 +71,19 @@ function Canvas(width, height) {
     );
   };
 
-  this.setMaxSize = (width, height) => {
-    this.maxWidth = width;
-    this.maxHeight = height;
+  this.setMaxSize = (width_, height_) => {
+    this.maxWidth = width_;
+    this.maxHeight = height_;
   };
 
-  this.setSize = (width, height) => {
-    if (width === undefined && height === undefined) {
+  this.setSize = (width_, height_) => {
+    if (width_ === undefined && height_ === undefined) {
       error("setSize function requires at least one argument");
     } else {
-      this.canvas.width = width;
-      this.canvas.height = height || width;
-      Width = width;
-      Height = height;
+      this.canvas.width = width_;
+      this.canvas.height = height_ || width_;
+      width = width_;
+      height_ = height_;
     }
   };
 
@@ -153,8 +155,8 @@ function Canvas(width, height) {
     this.ctx.strokeStyle = "rgba(0, 0, 0, 0)";
   };
 
-  this.lineWidth = width => {
-    this.ctx.lineWidth = width;
+  this.lineWidth = width_ => {
+    this.ctx.lineWidth = width_;
   };
 
   this.line = (x1, y1, x2, y2) => {
@@ -212,28 +214,28 @@ function Canvas(width, height) {
     }
   };
 
-  this.rect = (x, y, width, height) => {
+  this.rect = (x, y, width_, height_) => {
     if (
       x === undefined &&
       y === undefined &&
-      width === undefined &&
-      height === undefined
+      width_ === undefined &&
+      height_ === undefined
     ) {
       error("Invalid arguments for rectangle function");
     } else {
       let x1 = x;
       let y1 = y;
       let wid, heig;
-      if (width === undefined && height === undefined) {
+      if (width_ === undefined && height_ === undefined) {
         y1 = x1;
         wid = y;
-        heig = width;
-      } else if (width !== undefined && height === undefined) {
-        wid = width;
+        heig = width_;
+      } else if (width_ !== undefined && height_ === undefined) {
+        wid = width_;
         heig = wid;
       } else {
-        wid = width;
-        heig = height;
+        wid = width_;
+        heig = height_;
       }
 
       if (this.rectDrawMode === "corner") {
@@ -254,7 +256,7 @@ function Canvas(width, height) {
 
   this.circle = (x, y, r) => {
     if (x === undefined || y === undefined || r === undefined) {
-      error("Invalid arguments for canvas circle function");
+      error("Invalid arguments for Canvas circle method");
     } else {
       let x1 = x;
       let y1 = y;
@@ -265,6 +267,50 @@ function Canvas(width, height) {
       this.ctx.fill();
       this.ctx.stroke();
       this.ctx.closePath();
+    }
+  };
+
+  this.arc = (x, y, r, startAngle, endAngle) => {
+    if (
+      x === undefined ||
+      y === undefined ||
+      r === undefined ||
+      startAngle === undefined ||
+      endAngle === undefined
+    ) {
+      error("Invalid arguments for Canvas arc method");
+    } else {
+      let x1 = x;
+      let y1 = y;
+      let radius = r;
+      let sa = toRadians(startAngle - 90);
+      let ea = toRadians(endAngle - 90);
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(x1, y1);
+      this.ctx.arc(x1, y1, radius, sa, ea);
+      this.ctx.closePath();
+      this.ctx.fill();
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+  };
+
+  this.ellipse = (x, y, width_, height_, rotation) => {
+    if (x === undefined || height === undefined)
+      error("Invalid arguments for Canvas ellispe method");
+    else {
+      let x1 = x;
+      let y1 = y;
+      let wid = abs(width_);
+      let heig = abs(height_);
+      let angle = 0;
+      if (rotation !== undefined) angle = toRadians(rotation);
+
+      this.ctx.beginPath();
+      this.ctx.ellipse(x1, y1, wid, heig, angle, 0, TWO_PI);
+      this.ctx.fill();
+      this.ctx.stroke();
     }
   };
 
@@ -336,9 +382,9 @@ function Canvas(width, height) {
     this.ctx.restore();
   };
 
-  this.scale = (width, height) => {
-    let wid = width || 1;
-    let heig = height || wid;
+  this.scale = (width_, height_) => {
+    let wid = width_ || 1;
+    let heig = height_ || wid;
 
     this.ctx.scale(wid, heig);
   };
@@ -505,7 +551,7 @@ function Vector(x, y) {
 
   this.distance = vec2 => {
     if (vec2 === undefined)
-      error("You need to pass another vector to he Vector distance method");
+      error("You need to pass another vector to the Vector distance method");
     else return sqrt(sqr(this.x - vec2.x) + sqr(this.y - vec2.y));
   };
 
@@ -597,8 +643,8 @@ function randomVector(magnitude) {
   return vec;
 }
 
-function createCanvas(width, height) {
-  return new Canvas(width, height);
+function createCanvas(width_, height_) {
+  return new Canvas(width_, height_);
 }
 
 function createPoint(x, y) {
@@ -606,7 +652,7 @@ function createPoint(x, y) {
 }
 
 function randomPoint() {
-  return new Point(randInt(Width), randInt(Height));
+  return new Point(randInt(width), randInt(height));
 }
 
 function framerate(framerate) {
@@ -620,6 +666,14 @@ function framerate(framerate) {
     frameRate = framerate;
     interval = setInterval(loop, 1000 / frameRate);
   }
+}
+
+function toRadians(degrees) {
+  return degrees * (PI / 180);
+}
+
+function toDegrees(radians) {
+  return radians * (180 / PI);
 }
 
 function constrain(num, min, max) {
@@ -707,6 +761,37 @@ function randInt(num1, num2) {
   else if (num2 !== undefined)
     return Math.floor(Math.random() * (num2 - num1) + num1);
   else return Math.floor(Math.random() * num1);
+}
+
+function randomizeColor(r, g, b){
+  if (
+    (r === undefined &&
+      g === undefined &&
+      b === undefined) ||
+    (r !== undefined && g !== undefined && b === undefined)
+  ) {
+    error("Invalid arguments for randomizeColor function");
+  } else {
+    let red = r;
+    let green = g === undefined ? r : g;
+    let blue = b === undefined ? r : b;
+
+    let offset = randInt(50, 100);
+
+    red -= offset;
+    green -= offset;
+    blue -= offset;
+
+    if(red < 0) red = 0;
+    else if(red > 255) red = 255;
+    if(green < 0) green = 0;
+    else if(green > 255) green = 255;
+    if(blue < 0) blue = 0;
+    else if(blue > 255) blue = 255;
+
+    let col = [red, green, blue];
+    return col;
+  }
 }
 
 function floor(num) {

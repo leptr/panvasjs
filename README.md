@@ -7,10 +7,12 @@
 ## Variables
 
 - **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
-- **Width** and **Height** - contain the width and height of the canvas element
+- **width** and **height** - contain the width and height of the canvas element
 - **innerWidth** and **innerHeight** - contain the innner width and inner height of the browser window
 - **mouseX** and **mouseY** - contain the current coordinates of the mouse on the screen
 - **PI** - Pi constant
+- **TWO_PI** - two times Pi
+- **HALF_PI** - half Pi
 - **E** - Euler's constant
 - **SQRT2** - square root of 2
 - **SQRT1_2** - square root of 1/2
@@ -31,6 +33,7 @@
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
 - `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
 - `randInt(num1, num2)` - same as random(), except it returns a whole number; you must provide at least one argument
+- `randomizeColor(r, g, b)` - returns a random shade of the given color as an array of [red, green, blue] values
 - `floor(num)` - rounds the given number to the next lower integer
 - `ceil(num)` - rounds the given number to the next higher integer
 - `round(num)` - rounds the given number mathematically
@@ -74,6 +77,8 @@
 - `distance(x1, y1, x2, y2)` - returns the distance between given coordinates; only two arguments can be passed in which case both of them must be either of Vector or Point class and their distance will be returned; you can find the distance between two points, two vectors, or a point and a vector
 - `swap(array, index1, index2)` - swaps the two array elements at the given indexes
 - `sort(array)` - sorts the array
+- `toRadians(degrees)` - converts the number of degrees to radians and returns the result
+- `toDegrees(radians)` - converts the number of radians to degrees and returns the result
 - `constrain(num, min, max)` - constrains the given number between the min and the max values and returns the value
 - `lerp(value1, value2, step)` - lerp - Linear Interpolation - smooth transitioning between two values with the step given
 - `joinArray(array, spacing)` - returns a string of all the elements in the array divided by the spacing; spacing is optional, if there is none, it will return the string of all the elements concatenated without spacing
@@ -114,6 +119,8 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `rect(x, y, width, height)` - draws a rectangle starting at the given coordinates with the given dimensions; only two arguments can be passed, in which case x and y are set to the first number, and width and height are set to the second number
 - `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are "center" or "corner"
 - `circle(x, y, radius)` - draws a circle at the given coordinates with the given radius
+- `ellipse(x, y, width, height, rotation)` - draws an ellipse at the given coordinates with the provided dimensions; rotation is an optional argument and it takes a number of degrees
+- `arc(x, y, radius, startAngle, endAngle)` - draws an arc at the given coordinates with the given parameters
 - `beginShape(x, y)` - starts drawing a new shape at the given coordinates
 - `vertex(x, y)` - adds another point to the new shape at the given coordinates
 - `closeShape()` - closes the new shape
@@ -209,4 +216,4 @@ A 2D Vector object
 ```
 
 - The lowest available version is 2.0
-- The latest version is 2.0.1
+- The latest version is 2.0.2
