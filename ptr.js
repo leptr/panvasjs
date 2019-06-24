@@ -27,6 +27,7 @@ const LN2 = Math.LN2;
 const LN10 = Math.LN10;
 const LOG2E = Math.LOG2E;
 const LOG10E = Math.LOG10E;
+let UP, DOWN, LEFT, RIGHT, CENTER, START, END, CORNER;
 let mobile;
 let innerWidth, innerHeight;
 let can;
@@ -35,12 +36,6 @@ let interval = undefined;
 let frameCount = 0;
 let hasACanvas = true;
 let touchX, touchY, prevTouchX, prevTouchY;
-const UP = "up";
-const DOWN = "down";
-const LEFT = "left";
-const RIGHT = "right";
-const CENTER = "center";
-const CORNER = "corner";
 
 function Canvas(width_, height_) {
   this.width = width_ || 100;
@@ -562,12 +557,7 @@ function Vector(x, y) {
   };
 
   this.isOffScreen = () => {
-    if (
-      this.x >= canvas.width ||
-      this.x < 0 ||
-      this.y >= canvas.height ||
-      this.y < 0
-    )
+    if (this.x >= width || this.x < 0 || this.y >= height || this.y < 0)
       return true;
     else return false;
   };
@@ -920,18 +910,34 @@ window.addEventListener("touchmove", e => {
   let distY = startTouchY - touchY;
   let dir;
 
-  if (distX >= 100 && distY <= 10 && distY >= -10 && !calledFunction)
+  if (distX >= 100 && distY <= 10 && distY >= -10 && !calledFunction) {
     dir = RIGHT;
-  else if (distX <= -100 && distY <= 10 && distY >= -10 && !calledFunction)
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
+  } else if (distX <= -100 && distY <= 10 && distY >= -10 && !calledFunction) {
     dir = LEFT;
-  else if (distY <= -100 && distX <= 10 && distX >= -10 && !calledFunction)
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
+  } else if (distY <= -100 && distX <= 10 && distX >= -10 && !calledFunction) {
     dir = DOWN;
-  else if (distY >= 100 && distX <= 10 && distX >= -10 && !calledFunction)
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
+  } else if (distY >= 100 && distX <= 10 && distX >= -10 && !calledFunction) {
     dir = UP;
-
-  if (typeof swipe === "function") {
-    calledFunction = true;
-    swipe(dir);
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
   }
 
   if (typeof touchMove === "function") {
@@ -984,6 +990,14 @@ window.addEventListener("load", () => {
   mobile = isMobile();
   innerWidth = window.innerWidth;
   innerHeight = window.innerHeight;
+  END = "end";
+  START = "start";
+  CORNER = "corner";
+  CENTER = "center";
+  RIGHT = "right";
+  LEFT = "left";
+  DOWN = "down";
+  UP = "up";
   if (typeof onMobile === "function" && mobile) onMobile();
   setup();
 });

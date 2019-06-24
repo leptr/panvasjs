@@ -23,19 +23,19 @@ function Snake() {
 
   this.move = dir => {
     switch (dir) {
-      case "up":
+      case UP:
         this.velocity = createVector(0, -1);
         this.velocity.multiply(size);
         break;
-      case "down":
+      case DOWN:
         this.velocity = createVector(0, 1);
         this.velocity.multiply(size);
         break;
-      case "right":
+      case RIGHT:
         this.velocity = createVector(1, 0);
         this.velocity.multiply(size);
         break;
-      case "left":
+      case LEFT:
         this.velocity = createVector(-1, 0);
         this.velocity.multiply(size);
         break;

@@ -28,9 +28,9 @@ function gameOver() {
   canvas.pause();
   canvas.clear();
   canvas.textAlign("center");
-  canvas.text("GAME OVER", 250, 220, 50, "Arial");
+  canvas.text("GAME OVER", width / 2, 220, 50, "Arial");
   let message = mobile ? "Tap the screen to restart" : "Press SPACE to restart";
-  canvas.text(message, 250, 260, 30, "Arial");
+  canvas.text(message, width / 2, 260, 30, "Arial");
 }
 
 function keyDown() {
@@ -42,21 +42,21 @@ function keyDown() {
       if (gameover) set();
       break;
     case 37: // left arrow key
-      snake.move("left");
+      snake.move(LEFT);
       break;
     case 38: // up arrow key
-      snake.move("up");
+      snake.move(UP);
       break;
     case 39: // right arrow key
-      snake.move("right");
+      snake.move(RIGHT);
       break;
     case 40: // down arrow key
-      snake.move("down");
+      snake.move(DOWN);
       break;
   }
 }
 
-function touchDown() {
+function touchStart() {
   if (gameover) set();
 }
 
