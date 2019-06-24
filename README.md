@@ -64,10 +64,7 @@
 - `mouseDown()` - activates when the left mouse button is clicked; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `mouseMove()` - activates when the left mouse button is held down and mouse is moving; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `mouseUp()` - activates when the left mouse button is released; the mouse coordinates can be accessed through the mouseX and mouseY variables
-- `swipeUp()` - called when user swipes up on a touchscreen device
-- `swipeDown()` - called when user swipes down on a touchscreen device
-- `swipeLeft()` - called when user swipes left on a touchscreen device
-- `swipeRight()` - called when user swipes right on a touchscreen device
+- `swipe(dir)` - a callback function called when user swipes the screen on a mobile device; it is passed an argument dir which contains the direction of the swipe; dir can either be equal to UP, DOWN, LEFT, or RIGHT
 - `createVector(x, y)` - returns a Vector object with the given x and y values
 - `randomVector(magnitude)` - returns a random Vector object; magnitude is an optional argument; if provided, the returned vector will have the given magnitude, otherwise, the magnitude is set to 1
 - `createPoint(x, y)` - returns a Point object with the given x and y values
@@ -117,7 +114,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `lineFromVector(vector)` - draws a line from a vector
 - `lineFromAngle(x, y, angle, length)` - draws a line from an angle in degrees at the given coordinates with the provided length
 - `rect(x, y, width, height)` - draws a rectangle starting at the given coordinates with the given dimensions; only two arguments can be passed, in which case x and y are set to the first number, and width and height are set to the second number
-- `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are "center" or "corner"
+- `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are CENTER or CORNER
 - `circle(x, y, radius)` - draws a circle at the given coordinates with the given radius
 - `ellipse(x, y, width, height, rotation)` - draws an ellipse at the given coordinates with the provided dimensions; rotation is an optional argument and it takes a number of degrees
 - `arc(x, y, radius, startAngle, endAngle)` - draws an arc at the given coordinates with the given parameters
@@ -125,7 +122,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `vertex(x, y)` - adds another point to the new shape at the given coordinates
 - `closeShape()` - closes the new shape
 - `text(text, x, y, fontSize, fontName)` - displays the given text on the canvas at the given coordinates; fontSize is an integer, fontName is a string
-- `textAlign(alignment)` - sets the alignment for the displayed text; takes a string for an input; valid values are "start", "end", "left", "right", "center"
+- `textAlign(alignment)` - sets the alignment for the displayed text; takes a string for an input; valid values are START, END, LEFT, RIGHT, CENTER
 - `translate(x, y)` - translates the canvas starting point to the given coordinates
 - `rotate(angle)` - rotates the canvas by the given angle
 - `scale(widthScale, heightScale)` - scales the canvas proportionate to the given arguments; if only one argument is given, both width and height are scaled in proportion to that one argument; if no arguments are passed, canvas is returned to scale 1
@@ -216,4 +213,4 @@ A 2D Vector object
 ```
 
 - The lowest available version is 2.0
-- The latest version is 2.0.2
+- The latest version is 2.0.3
