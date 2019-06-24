@@ -27,6 +27,7 @@ const LN2 = Math.LN2;
 const LN10 = Math.LN10;
 const LOG2E = Math.LOG2E;
 const LOG10E = Math.LOG10E;
+let UP, DOWN, LEFT, RIGHT, CENTER, START, END, CORNER;
 let mobile;
 let innerWidth, innerHeight;
 let can;
@@ -45,25 +46,28 @@ function Canvas(width_, height_) {
 
   this.background = 51;
 
-  this.canvas = document.createElement("CANVAS"); //creating a canvas element
-  document.body.appendChild(this.canvas); //adding the canvas to the body
+  this.canvas = document.createElement("CANVAS");
+  document.body.appendChild(this.canvas);
 
-  this.ctx = this.canvas.getContext("2d"); //getting the canvas context
+  this.ctx = this.canvas.getContext("2d");
 
   can = this;
 
-  this.canvas.width = this.width; //setting width
-  this.canvas.height = this.height; //setting height
+  this.canvas.width = this.width;
+  this.canvas.height = this.height;
 
   interval = setInterval(loop, 1000 / frameRate);
 
   this.maxWidth = 99000;
   this.maxHeight = 99000;
 
+  this.backgroundColor = "rgb(0, 0, 0)";
+
   this.rectDrawMode = "corner";
 
   this.clear = () => {
-    this.ctx.clearRect(
+    this.ctx.fillStyle = this.backgroundColor;
+    this.ctx.fillRect(
       -this.maxWidth / 3,
       -this.maxHeight / 3,
       (this.maxWidth / 3) * 2,
@@ -96,14 +100,14 @@ function Canvas(width_, height_) {
       (r === undefined && g === undefined && b === undefined) ||
       (r !== undefined && g !== undefined && b === undefined)
     ) {
-      error("Invalid arguments for canvas background function");
+      error("Invalid arguments for Canvas background method");
     } else {
       let red = r;
       let green = g || r;
       let blue = b || r;
 
-      let col = "rgb(" + red + "," + green + "," + blue + ")"; //creating a string with the imputed color
-      this.canvas.style.backgroundColor = col; //setting the background color
+      let col = "rgb(" + red + "," + green + "," + blue + ")";
+      this.backgroundColor = col;
     }
   };
 
@@ -115,14 +119,14 @@ function Canvas(width_, height_) {
         a === undefined) ||
       (r !== undefined && g !== undefined && b === undefined && a === undefined)
     ) {
-      error("Invalid arguments for canvas fill function");
+      error("Invalid arguments for Canvas fill method");
     } else {
       let red = r;
       let green = g === undefined ? r : g;
       let blue = b === undefined ? r : b;
       let alpha = a === undefined ? 1 : a / 255;
 
-      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")"; //creating a string with the imputed color
+      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")";
       this.ctx.fillStyle = col;
     }
   };
@@ -139,14 +143,14 @@ function Canvas(width_, height_) {
         a === undefined) ||
       (r !== undefined && g !== undefined && b === undefined && a === undefined)
     ) {
-      error("Invalid arguments for canvas stroke function");
+      error("Invalid arguments for Canvas stroke method");
     } else {
       let red = r;
       let green = g === undefined ? r : g;
       let blue = b === undefined ? r : b;
       let alpha = a === undefined ? 1 : a / 255;
 
-      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")"; //creating a string with the imputed color
+      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")";
       this.ctx.strokeStyle = col;
     }
   };
@@ -166,7 +170,7 @@ function Canvas(width_, height_) {
       y1 === undefined ||
       y2 === undefined
     )
-      error("Invalid arguments for canvas line function");
+      error("Invalid arguments for Canvas line method");
     else {
       this.ctx.beginPath();
       this.ctx.moveTo(x1, y1);
@@ -221,7 +225,7 @@ function Canvas(width_, height_) {
       width_ === undefined &&
       height_ === undefined
     ) {
-      error("Invalid arguments for rectangle function");
+      error("Invalid arguments for Canvas rect method");
     } else {
       let x1 = x;
       let y1 = y;
@@ -298,7 +302,7 @@ function Canvas(width_, height_) {
 
   this.ellipse = (x, y, width_, height_, rotation) => {
     if (x === undefined || height === undefined)
-      error("Invalid arguments for Canvas ellispe method");
+      error("Invalid arguments for Canvas ellipse method");
     else {
       let x1 = x;
       let y1 = y;
@@ -344,7 +348,7 @@ function Canvas(width_, height_) {
       fontSize === undefined ||
       fontName === undefined
     )
-      error("Invalid arguments for canvas text function");
+      error("Invalid arguments for Canvas text method");
     else {
       this.ctx.font = fontSize.toString() + "px " + fontName;
       this.ctx.fillText(text, x, y);
@@ -420,7 +424,7 @@ function Canvas(width_, height_) {
 
   this.drawImage = (image, sx, sy, swidth, sheight, x, y, wid, heig) => {
     if (image === undefined)
-      error("Invalid arguments for canvas drawImage function");
+      error("Invalid arguments for Canvas drawImage method");
     else {
       if (swidth === undefined) this.ctx.drawImage(image.image, sx, sy);
       else if (swidth !== undefined && sheight !== undefined && x === undefined)
@@ -556,19 +560,18 @@ function Vector(x, y) {
   };
 
   this.isOffScreen = () => {
-    if (
-      this.x >= canvas.width ||
-      this.x < 0 ||
-      this.y >= canvas.height ||
-      this.y < 0
-    )
+    if (this.x >= width || this.x < 0 || this.y >= height || this.y < 0)
       return true;
     else return false;
   };
 
   this.lerp = (vec2, step) => {
-    this.x = (1 - step) * this.x + step * vec2.x;
-    this.y = (1 - step) * this.y + step * vec2.y;
+    if (vec2 === undefined || step === undefined)
+      error("Invalid arguments for Vector lerp method");
+    else {
+      this.x = lerp(this.x, vec2.x, step);
+      this.y = lerp(this.y, vec2.y, step);
+    }
   };
 
   this.constrain = (minX, maxX, minY, maxY) => {
@@ -623,7 +626,7 @@ function distance(x1, y1, x2, y2) {
         y1 instanceof Point
       ) {
         return sqrt(sqr(x1.x - y1.x) + sqr(x1.y - y1.y));
-      } else error("Invalid arguments for dist function");
+      } else error("Invalid arguments for distance function");
     } else {
       return sqrt(sqr(x1 - x2) + sqr(y1 - y2));
     }
@@ -683,7 +686,11 @@ function constrain(num, min, max) {
 }
 
 function lerp(value1, value2, step) {
-  return (1 - step) * value1 + step * value2;
+  if (value1 === undefined || value2 === undefined || step === undefined)
+    error("Invalid arguments for lerp function");
+  else {
+    return (1 - step) * value1 + step * value2;
+  }
 }
 
 function map(num, a, b, c, d) {
@@ -763,11 +770,9 @@ function randInt(num1, num2) {
   else return Math.floor(Math.random() * num1);
 }
 
-function randomizeColor(r, g, b){
+function randomizeColor(r, g, b) {
   if (
-    (r === undefined &&
-      g === undefined &&
-      b === undefined) ||
+    (r === undefined && g === undefined && b === undefined) ||
     (r !== undefined && g !== undefined && b === undefined)
   ) {
     error("Invalid arguments for randomizeColor function");
@@ -782,12 +787,12 @@ function randomizeColor(r, g, b){
     green -= offset;
     blue -= offset;
 
-    if(red < 0) red = 0;
-    else if(red > 255) red = 255;
-    if(green < 0) green = 0;
-    else if(green > 255) green = 255;
-    if(blue < 0) blue = 0;
-    else if(blue > 255) blue = 255;
+    if (red < 0) red = 0;
+    else if (red > 255) red = 255;
+    if (green < 0) green = 0;
+    else if (green > 255) green = 255;
+    if (blue < 0) blue = 0;
+    else if (blue > 255) blue = 255;
 
     let col = [red, green, blue];
     return col;
@@ -914,19 +919,36 @@ window.addEventListener("touchmove", e => {
   touchY = touches[0].clientY;
   let distX = startTouchX - touchX;
   let distY = startTouchY - touchY;
-  //log(distX + " " + distY);
+  let dir;
+
   if (distX >= 100 && distY <= 10 && distY >= -10 && !calledFunction) {
-    calledFunction = true;
-    if (typeof swipeRight === "function") swipeRight();
+    dir = RIGHT;
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
   } else if (distX <= -100 && distY <= 10 && distY >= -10 && !calledFunction) {
-    calledFunction = true;
-    if (typeof swipeLeft === "function") swipeLeft();
+    dir = LEFT;
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
   } else if (distY <= -100 && distX <= 10 && distX >= -10 && !calledFunction) {
-    calledFunction = true;
-    if (typeof swipeDown === "function") swipeDown();
+    dir = DOWN;
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
   } else if (distY >= 100 && distX <= 10 && distX >= -10 && !calledFunction) {
-    calledFunction = true;
-    if (typeof swipeUp === "function") swipeUp();
+    dir = UP;
+    if (typeof swipe === "function") {
+      calledFunction = true;
+      log("Swiping " + dir);
+      swipe(dir);
+    }
   }
 
   if (typeof touchMove === "function") {
@@ -979,6 +1001,14 @@ window.addEventListener("load", () => {
   mobile = isMobile();
   innerWidth = window.innerWidth;
   innerHeight = window.innerHeight;
+  END = "end";
+  START = "start";
+  CORNER = "corner";
+  CENTER = "center";
+  RIGHT = "right";
+  LEFT = "left";
+  DOWN = "down";
+  UP = "up";
   if (typeof onMobile === "function" && mobile) onMobile();
   setup();
 });

@@ -61,10 +61,13 @@ function Canvas(width_, height_) {
   this.maxWidth = 99000;
   this.maxHeight = 99000;
 
+  this.backgroundColor = "rgb(0, 0, 0)";
+
   this.rectDrawMode = "corner";
 
   this.clear = () => {
-    this.ctx.clearRect(
+    this.ctx.fillStyle = this.backgroundColor;
+    this.ctx.fillRect(
       -this.maxWidth / 3,
       -this.maxHeight / 3,
       (this.maxWidth / 3) * 2,
@@ -104,7 +107,7 @@ function Canvas(width_, height_) {
       let blue = b || r;
 
       let col = "rgb(" + red + "," + green + "," + blue + ")";
-      this.canvas.style.backgroundColor = col;
+      this.backgroundColor = col;
     }
   };
 
@@ -563,8 +566,12 @@ function Vector(x, y) {
   };
 
   this.lerp = (vec2, step) => {
-    this.x = (1 - step) * this.x + step * vec2.x;
-    this.y = (1 - step) * this.y + step * vec2.y;
+    if (vec2 === undefined || step === undefined)
+      error("Invalid arguments for Vector lerp method");
+    else {
+      this.x = lerp(this.x, vec2.x, step);
+      this.y = lerp(this.y, vec2.y, step);
+    }
   };
 
   this.constrain = (minX, maxX, minY, maxY) => {
@@ -679,7 +686,11 @@ function constrain(num, min, max) {
 }
 
 function lerp(value1, value2, step) {
-  return (1 - step) * value1 + step * value2;
+  if (value1 === undefined || value2 === undefined || step === undefined)
+    error("Invalid arguments for lerp function");
+  else {
+    return (1 - step) * value1 + step * value2;
+  }
 }
 
 function map(num, a, b, c, d) {
