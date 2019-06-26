@@ -129,15 +129,19 @@ function Canvas(width_, height_) {
     } else {
       let red, green, blue, alpha;
       if (r instanceof Color) {
-        red = r.red;
-        green = r.green;
-        blue = r.blue;
-
         this.ctx.fillStyle = r.color();
       } else {
         red = r;
-        green = g || r;
-        blue = b || r;
+        green = g === undefined ? r : g;
+        blue = b === undefined ? r : b;
+        if (g !== undefined && b === undefined) {
+          green = r;
+          alpha = g;
+        } else if (a !== undefined) {
+          alpha = a;
+        } else {
+          alpha = 255;
+        }
 
         this.ctx.fillStyle = color(red, green, blue, alpha);
       }
@@ -154,15 +158,19 @@ function Canvas(width_, height_) {
     } else {
       let red, green, blue, alpha;
       if (r instanceof Color) {
-        red = r.red;
-        green = r.green;
-        blue = r.blue;
-
-        this.ctx.strokeStyle = r.color();
+        this.ctx.fillStyle = r.color();
       } else {
         red = r;
-        green = g || r;
-        blue = b || r;
+        green = g === undefined ? r : g;
+        blue = b === undefined ? r : b;
+        if (g !== undefined && b === undefined) {
+          green = r;
+          alpha = g;
+        } else if (a !== undefined) {
+          alpha = a;
+        } else {
+          alpha = 255;
+        }
 
         this.ctx.strokeStyle = color(red, green, blue, alpha);
       }
