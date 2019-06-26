@@ -8,7 +8,7 @@
 
 - **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
 - **width** and **height** - contain the width and height of the canvas element
-- **innerWidth** and **innerHeight** - contain the innner width and inner height of the browser window
+- **innerWidth** and **innerHeight** - contain the inner width and inner height of the browser window
 - **mouseX** and **mouseY** - contain the current coordinates of the mouse on the screen
 - **PI** - Pi constant
 - **TWO_PI** - two times Pi
@@ -22,6 +22,7 @@
 - **LOG10E** - base 10 logarithm of e
 - **frameCount** - contains the number of frames that have passed since the loop started running
 - **frameRate** - contains the current number of frames per second
+- **mousePressed** - equals to `true` if the mouse is currently being pressed or `false` if it isn't
 
 ## Functions
 
@@ -31,7 +32,7 @@
 - `noCanvas()` - creates a project without a canvas that still uses the update and setup functions
 - `framerate(newFramerate)` - changes the framerate to the new one
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
-- `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
+- `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1, while never returning the maximum value; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
 - `randInt(num1, num2)` - same as random(), except it returns a whole number; you must provide at least one argument
 - `randomizeColor(r, g, b)` - returns a random shade of the given color as an array of [red, green, blue] values
 - `floor(num)` - rounds the given number to the next lower integer
@@ -48,11 +49,12 @@
 - `tan(angle)` - returns the tangent of the given angle
 - `atan(num)` - returns the arcus tangnet of the given number
 - `exp(num)` - return E to the power of num
-- `log(num)` - returns the natural logarith of num with base E
+- `logh(num)` - returns the natural logarith of num with base E
 - `min(nums)` - returns the lowest of the numbers given; takes multiple numbers as input
 - `max(nums)` - returns the highest of the numbers given; takes multiple numbers as input
 - `write(text)` - writes the given text to the document
 - `log(text)` - logs the given text to the console
+- `table(array)` - displays the array in a table in the console
 - `error(text)` - writes the given text to the console as an error
 - `warn(text)` - writes the given text to the console as a warning
 - `setText(element, text)` - writes the given text to the element with the given ID
@@ -65,12 +67,16 @@
 - `mouseMove()` - activates when the left mouse button is held down and mouse is moving; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `mouseUp()` - activates when the left mouse button is released; the mouse coordinates can be accessed through the mouseX and mouseY variables
 - `swipe(dir)` - a callback function called when user swipes the screen on a mobile device; it is passed an argument dir which contains the direction of the swipe; dir can either be equal to UP, DOWN, LEFT, or RIGHT
-- `createVector(x, y)` - returns a Vector object with the given x and y values
+- `createVector(x, y)` - returns a Vector object with the given x and y values; if x and y are not given, it returns a zero vector
 - `randomVector(magnitude)` - returns a random Vector object; magnitude is an optional argument; if provided, the returned vector will have the given magnitude, otherwise, the magnitude is set to 1
 - `createPoint(x, y)` - returns a Point object with the given x and y values
 - `randomPoint()` - returns a random Point object
 - `createCanvas(widht, height)` - returns a Canvas object wit the given width and height values
 - `Vector.fromAngle(angle)` - returns a Vector object generated from the given angle
+- `color(red, green, blue, alpha)` - returns a string color
+- `isInArray(array, element)` - returns the element index in the array if the element is indeed in the array, returns false otherwise
+- `ramoveFromArray(array, element)` - removes the element from the array if it is indeed in the array, otherwise does nothing
+- `createMatrix(columns, rows)` - returns a matrix (2D array) with the number of columns and rows filled with null elements
 - `distance(x1, y1, x2, y2)` - returns the distance between given coordinates; only two arguments can be passed in which case both of them must be either of Vector or Point class and their distance will be returned; you can find the distance between two points, two vectors, or a point and a vector
 - `swap(array, index1, index2)` - swaps the two array elements at the given indexes
 - `sort(array)` - sorts the array
@@ -189,6 +195,7 @@ A 2D Vector object
 - `angle()` - returns the angle of the vector in relation to the x axis
 - `rotate(angle)` - rotates the vector by the given angle
 - `magintude()` - returns the magnitude (length) of the vector
+- `magnitudeSqr()` - returns the magnitude squared
 - `setMagnitude(newMagnitude)` - sets the magnitude (length) of the vector to the new one
 - `copy()` - returns a copy of the vector
 - `normalize()` - normalizes the vector (sets its magnitude to 1)
@@ -196,6 +203,22 @@ A 2D Vector object
 - `isOffScreen()` - returns true if the vector is off the screen to any side; translating the canvas affects its work
 - `lerp(vector2, step)` - lerp - Linear Interpolation - smooth transitioning between current values to the values of the given vector with the provided step
 - `constrain(minX, maxX, minY, maxY)` - constrains vector between given values
+
+## Color
+
+A color class
+
+### Attributes
+
+- **red** - red value of the color
+- **green** - green value of the color
+- **blue** - blue value of the color
+- **alpha** - alpha value of the color
+
+### Methods
+
+- `randomize(randomizeAlpha)` - returns a new Color object containing a random shade of the original color; randomizeAlpha is an optional argument; if it is set to true; the alpha value of the color will also bi randomized
+- `color()` - returns a string containing the color
 
 ## You can check out the example folder for some examples of code usage
 
@@ -213,4 +236,4 @@ A 2D Vector object
 ```
 
 - The lowest available version is 2.0
-- The latest version is 2.0.3
+- The latest version is 2.0.4

@@ -36,6 +36,7 @@ let interval = undefined;
 let frameCount = 0;
 let hasACanvas = true;
 let touchX, touchY, prevTouchX, prevTouchY;
+let mousePressed = false;
 
 function Canvas(width_, height_) {
   this.width = width_ || 100;
@@ -62,6 +63,7 @@ function Canvas(width_, height_) {
   this.maxHeight = 99000;
 
   this.backgroundColor = "rgb(0, 0, 0)";
+  this.shouldClear = true;
 
   this.rectDrawMode = "corner";
 
@@ -73,6 +75,10 @@ function Canvas(width_, height_) {
       (this.maxWidth / 3) * 2,
       (this.maxHeight / 3) * 2
     );
+  };
+
+  this.noClear = () => {
+    this.shouldClear = false;
   };
 
   this.setMaxSize = (width_, height_) => {
@@ -96,38 +102,43 @@ function Canvas(width_, height_) {
   };
 
   this.background = (r, g, b) => {
-    if (
-      (r === undefined && g === undefined && b === undefined) ||
-      (r !== undefined && g !== undefined && b === undefined)
-    ) {
+    if (r === undefined) {
       error("Invalid arguments for Canvas background method");
     } else {
-      let red = r;
-      let green = g || r;
-      let blue = b || r;
-
-      let col = "rgb(" + red + "," + green + "," + blue + ")";
-      this.backgroundColor = col;
+      let red, green, blue;
+      if (r instanceof Color) {
+        red = r.red;
+        green = r.green;
+        blue = r.blue;
+        this.backgroundColor = r.color();
+      } else {
+        red = r;
+        green = g || r;
+        blue = b || r;
+        this.backgroundColor = color(red, green, blue);
+        this.canvas.style.backgroundColor = color(red, green, blue);
+      }
     }
   };
 
   this.fill = (r, g, b, a) => {
-    if (
-      (r === undefined &&
-        g === undefined &&
-        b === undefined &&
-        a === undefined) ||
-      (r !== undefined && g !== undefined && b === undefined && a === undefined)
-    ) {
+    if (r === undefined) {
       error("Invalid arguments for Canvas fill method");
     } else {
-      let red = r;
-      let green = g === undefined ? r : g;
-      let blue = b === undefined ? r : b;
-      let alpha = a === undefined ? 1 : a / 255;
+      let red, green, blue, alpha;
+      if (r instanceof Color) {
+        red = r.red;
+        green = r.green;
+        blue = r.blue;
 
-      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")";
-      this.ctx.fillStyle = col;
+        this.ctx.fillStyle = r.color();
+      } else {
+        red = r;
+        green = g || r;
+        blue = b || r;
+
+        this.ctx.fillStyle = color(red, green, blue, alpha);
+      }
     }
   };
 
@@ -136,22 +147,23 @@ function Canvas(width_, height_) {
   };
 
   this.stroke = (r, g, b, a) => {
-    if (
-      (r === undefined &&
-        g === undefined &&
-        b === undefined &&
-        a === undefined) ||
-      (r !== undefined && g !== undefined && b === undefined && a === undefined)
-    ) {
+    if (r === undefined) {
       error("Invalid arguments for Canvas stroke method");
     } else {
-      let red = r;
-      let green = g === undefined ? r : g;
-      let blue = b === undefined ? r : b;
-      let alpha = a === undefined ? 1 : a / 255;
+      let red, green, blue, alpha;
+      if (r instanceof Color) {
+        red = r.red;
+        green = r.green;
+        blue = r.blue;
 
-      let col = "rgba(" + red + "," + green + "," + blue + ", " + alpha + ")";
-      this.ctx.strokeStyle = col;
+        this.ctx.strokeStyle = r.color();
+      } else {
+        red = r;
+        green = g || r;
+        blue = b || r;
+
+        this.ctx.strokeStyle = color(red, green, blue, alpha);
+      }
     }
   };
 
@@ -523,6 +535,10 @@ function Vector(x, y) {
     return sqrt(sqr(this.x) + sqr(this.y));
   };
 
+  this.magnitudeSqr = () => {
+    return sqr(this.x) + sqr(this.y);
+  };
+
   this.setMagnitude = newMag => {
     let mag = sqrt(sqr(this.x) + sqr(this.y));
     let ratio = newMag / mag;
@@ -608,12 +624,72 @@ function Point(x, y) {
   };
 }
 
+function Color(red, green, blue, alpha) {
+  this.red = red || 0;
+  this.alpha = alpha || 255;
+  if (green !== undefined && blue !== undefined) {
+    this.green = green;
+    this.blue = blue;
+    this.alpha = 255;
+  } else if (green !== undefined && blue === undefined) {
+    this.green = red;
+    this.blue = red;
+    this.alpha = green;
+  } else {
+    this.green = red;
+    this.blue = red;
+  }
+
+  this.randomize = randomizeAlpha => {
+    let r, g, b, a;
+
+    let offset = randInt(-100, 100);
+
+    r = this.red + offset;
+    g = this.green + offset;
+    b = this.blue + offset;
+    a = randomizeAlpha ? this.alpha + offset : this.alpha;
+
+    return new Color(r, g, b, a);
+  };
+
+  this.color = () => {
+    return color(this.red, this.green, this.blue, this.alpha);
+  };
+}
+
 function Image(path) {
   this.path = path;
   this.filename = this.path.split("/").pop();
 
   this.image = document.createElement("IMG");
   this.image.src = this.path;
+}
+
+function color(red, green, blue, alpha) {
+  if (red === undefined) {
+    error("Invalid arguments for color function");
+  } else {
+    let r, g, b, a;
+    if (green !== undefined && blue === undefined) {
+      r = red;
+      g = red;
+      b = red;
+      a = green;
+    } else if (blue !== undefined && alpha === undefined) {
+      r = red;
+      g = green;
+      b = blue;
+      a = 1;
+    } else if (alpha !== undefined) {
+      r = red;
+      g = green;
+      b = blue;
+      a = alpha / 255;
+    }
+
+    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+  }
 }
 
 function distance(x1, y1, x2, y2) {
@@ -634,7 +710,9 @@ function distance(x1, y1, x2, y2) {
 }
 
 function createVector(x, y) {
-  return new Vector(x, y);
+  let x1 = x || 0;
+  let y1 = y || 0;
+  return new Vector(x1, y1);
 }
 
 function randomVector(magnitude) {
@@ -658,17 +736,38 @@ function randomPoint() {
   return new Point(randInt(width), randInt(height));
 }
 
-function framerate(framerate) {
-  if (framerate && typeof framerate !== "number") {
-    error("Invalid argument for framerate function");
-  } else {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
+function isInArray(array, element) {
+  if (array === undefined || element === undefined)
+    error("Invalid arguments for isInArray function");
+  else {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === element) {
+        return i;
+      }
     }
-    frameRate = framerate;
-    interval = setInterval(loop, 1000 / frameRate);
+    return false;
   }
+}
+
+function removeFromArray(array, element) {
+  if (array === undefined || element === undefined)
+    error("Invalid arguments for removeFromArray function");
+  else {
+    let i = isInArray(array, element);
+    if (i === false) return;
+    array.splice(i, 1);
+  }
+}
+
+function createMatrix(cols, rows) {
+  let m = [];
+  for (let i = 0; i < cols; i++) {
+    m[i] = [];
+    for (let j = 0; j < rows; j++) {
+      m[i][j] = null;
+    }
+  }
+  return m;
 }
 
 function toRadians(degrees) {
@@ -770,35 +869,6 @@ function randInt(num1, num2) {
   else return Math.floor(Math.random() * num1);
 }
 
-function randomizeColor(r, g, b) {
-  if (
-    (r === undefined && g === undefined && b === undefined) ||
-    (r !== undefined && g !== undefined && b === undefined)
-  ) {
-    error("Invalid arguments for randomizeColor function");
-  } else {
-    let red = r;
-    let green = g === undefined ? r : g;
-    let blue = b === undefined ? r : b;
-
-    let offset = randInt(50, 100);
-
-    red -= offset;
-    green -= offset;
-    blue -= offset;
-
-    if (red < 0) red = 0;
-    else if (red > 255) red = 255;
-    if (green < 0) green = 0;
-    else if (green > 255) green = 255;
-    if (blue < 0) blue = 0;
-    else if (blue > 255) blue = 255;
-
-    let col = [red, green, blue];
-    return col;
-  }
-}
-
 function floor(num) {
   return Math.floor(num);
 }
@@ -855,7 +925,7 @@ function exp(num) {
   return Math.exp(num);
 }
 
-function log(num) {
+function logh(num) {
   return Math.log(num);
 }
 
@@ -873,6 +943,10 @@ function write(text) {
 
 function log(text) {
   console.log(text);
+}
+
+function table(array) {
+  console.table(array);
 }
 
 function error(text) {
@@ -964,6 +1038,7 @@ window.addEventListener("touchend", e => {
 });
 
 window.addEventListener("mousedown", e => {
+  mousePressed = true;
   if (!mobile) {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -984,6 +1059,7 @@ window.addEventListener("mousemove", e => {
 });
 
 window.addEventListener("mouseup", e => {
+  mousePressed = false;
   if (!mobile) {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -992,6 +1068,21 @@ window.addEventListener("mouseup", e => {
     }
   }
 });
+
+function framerate(framerate) {
+  if (framerate && typeof framerate !== "number") {
+    error("Invalid argument for framerate function");
+  } else {
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+    frameRate = framerate;
+    interval = setInterval(loop, 1000 / frameRate);
+  }
+
+  return frameRate;
+}
 
 window.addEventListener("ready", () => {
   if (typeof preload === "function") preload();
@@ -1020,6 +1111,6 @@ function noCanvas() {
 
 function loop() {
   frameCount++;
-  if (hasACanvas) can.clear();
+  if (hasACanvas && can.shouldClear) can.clear();
   if (typeof update === "function") update();
 }
