@@ -65,6 +65,8 @@ function Canvas(width_, height_) {
   this.backgroundColor = "rgb(0, 0, 0)";
   this.shouldClear = true;
 
+  this.lnWdth = 1;
+
   this.rectDrawMode = "corner";
 
   this.clear = () => {
@@ -173,6 +175,7 @@ function Canvas(width_, height_) {
 
   this.lineWidth = width_ => {
     this.ctx.lineWidth = width_;
+    this.lnWdth = width_;
   };
 
   this.line = (x1, y1, x2, y2) => {
@@ -268,6 +271,21 @@ function Canvas(width_, height_) {
     if (mode !== "center" && mode !== "corner")
       error("Invalid argument for Canvas rectMode method");
     else this.rectDrawMode = mode;
+  };
+
+  this.point = (x, y) => {
+    if (x === undefined) error("Invalid arguments for Canvas point method");
+    else {
+      let x1 = x;
+      let y1 = y || x;
+
+      this.ctx.beginPath();
+      this.ctx.fillStyle = this.ctx.strokeStyle;
+      this.ctx.arc(x1, y1, this.lnWdth / 2, 0, PI * 2);
+      this.ctx.fill();
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
   };
 
   this.circle = (x, y, r) => {

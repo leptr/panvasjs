@@ -121,6 +121,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `lineFromAngle(x, y, angle, length)` - draws a line from an angle in degrees at the given coordinates with the provided length
 - `rect(x, y, width, height)` - draws a rectangle starting at the given coordinates with the given dimensions; only two arguments can be passed, in which case x and y are set to the first number, and width and height are set to the second number
 - `rectMode(mode)` - sets the drawing mode for rectangles on canvas; takes a string for an input; valid values are CENTER or CORNER
+- `point(x, y)` - draws a point at the x and y coordinates; the size of the point is changed via the lineWidth method
 - `circle(x, y, radius)` - draws a circle at the given coordinates with the given radius
 - `ellipse(x, y, width, height, rotation)` - draws an ellipse at the given coordinates with the provided dimensions; rotation is an optional argument and it takes a number of degrees
 - `arc(x, y, radius, startAngle, endAngle)` - draws an arc at the given coordinates with the given parameters
@@ -134,7 +135,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `scale(widthScale, heightScale)` - scales the canvas proportionate to the given arguments; if only one argument is given, both width and height are scaled in proportion to that one argument; if no arguments are passed, canvas is returned to scale 1
 - `save()` - saves the current state of the canvas
 - `restore()` - restores the last saved state of the canvas
-- `screenshot()` - takes a screenshot of the canvas and saves it as a png file; the background color is not included in the screenshot
+- `screenshot()` - takes a screenshot of the canvas and saves it as a png file
 - `playPause()` - switches between states of playin and paused
 - `pause()` - pauses the loop if it is unpaused
 - `play()` - unpauses the loop if it is paused
@@ -236,4 +237,4 @@ A color class
 ```
 
 - The lowest available version is 2.0
-- The latest version is 2.0.4
+- The latest version is 2.0.5
