@@ -225,16 +225,15 @@ A color class
 
 ## Creating a new PtrJS project
 
-- To create a new PtrJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.
+To create a new PtrJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.\
 
-- You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:
-  https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js
-
-- To use the latest version, add the following line of code into your head tag
+You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:\
+  https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js\
+To use the latest version, add the following line of code into your head tag\
 
 ```
 <script src="https://cdn.petarmijailovic.com/ptrjs/latest/ptr.min.js"></script>
 ```
 
-- The lowest available version is 2.0
-- The latest version is 2.0.5
+The lowest available version is 2.0\
+The latest version is 2.0.5\
