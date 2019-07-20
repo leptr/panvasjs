@@ -236,4 +236,4 @@ To use the latest version, add the following line of code into your head tag
 ```
 
 The lowest available version is 2.0\
-The latest version is 2.0.5\
+The latest version is 2.0.5
