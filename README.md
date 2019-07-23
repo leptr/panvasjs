@@ -1,8 +1,13 @@
 # PtrJS
 
-## A framework for JavaScript canvas
+A framework for JavaScript canvas
 
 ## Documentation
+
+##IMPORTANT NOTICE
+
+Since the version 2.0.6 the `log` function, that prints messages into the developer console, has been renamed to `print`, and the `logh` function, which returns the logarithm of the given number, has been renamed to `log`. **This can create errors when upgrading from version 2.0.5 and below to version 2.0.6 and up. Be wary of that**\
+Also, the versions below the version 2.0.6 are no longer available through the CDN due to a critical error. **The lowest version you can now use is 2.0.6**
 
 ## Variables
 
@@ -49,11 +54,11 @@
 - `tan(angle)` - returns the tangent of the given angle
 - `atan(num)` - returns the arcus tangnet of the given number
 - `exp(num)` - return E to the power of num
-- `logh(num)` - returns the natural logarith of num with base E
+- `log(num)` - returns the natural logarith of num with base E
 - `min(nums)` - returns the lowest of the numbers given; takes multiple numbers as input
 - `max(nums)` - returns the highest of the numbers given; takes multiple numbers as input
 - `write(text)` - writes the given text to the document
-- `log(text)` - logs the given text to the console
+- `print(text)` - logs the given text to the console
 - `table(array)` - displays the array in a table in the console
 - `error(text)` - writes the given text to the console as an error
 - `warn(text)` - writes the given text to the console as a warning
@@ -71,7 +76,7 @@
 - `randomVector(magnitude)` - returns a random Vector object; magnitude is an optional argument; if provided, the returned vector will have the given magnitude, otherwise, the magnitude is set to 1
 - `createPoint(x, y)` - returns a Point object with the given x and y values
 - `randomPoint()` - returns a random Point object
-- `createCanvas(widht, height)` - returns a Canvas object wit the given width and height values
+- `createCanvas(width, height, canvas)` - returns a Canvas object wit the given width and height values; canvas is an optional argument in case you want to use an existing canvas instead of creating a new one, then you provide the pointer to the canvas you want to use
 - `Vector.fromAngle(angle)` - returns a Vector object generated from the given angle
 - `color(red, green, blue, alpha)` - returns a string color
 - `isInArray(array, element)` - returns the element index in the array if the element is indeed in the array, returns false otherwise
@@ -228,12 +233,12 @@ A color class
 To create a new PtrJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.
 
 You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:\
-  https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js \
+ https://cdn.petarmijailovic.com/ptrjs/version/ptr.js or https://cdn.petarmijailovic.com/ptrjs/version/ptr.min.js \
 To use the latest version, add the following line of code into your head tag
 
 ```
 <script src="https://cdn.petarmijailovic.com/ptrjs/latest/ptr.min.js"></script>
 ```
 
-The lowest available version is 2.0\
-The latest version is 2.0.5
+The lowest available version is 2.0.6\
+The latest version is 2.0.6

@@ -1,7 +1,7 @@
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
-  ); 
+  );
 }
 
 let keyCode, mouseX, mouseY;
@@ -28,17 +28,19 @@ let hasACanvas = true;
 let touchX, touchY, prevTouchX, prevTouchY;
 let mousePressed = false;
 
-function Canvas(width_, height_) {
+function Canvas(width_, height_, canvas_) {
   this.width = width_ || 100;
   this.height = height_ || this.width;
 
-  width = this.width;
-  height = this.height;
+  if (!canvas_) {
+    this.canvas = document.createElement("CANVAS");
+    document.body.appendChild(this.canvas);
+  } else this.canvas = canvas_;
 
   this.background = 51;
 
-  this.canvas = document.createElement("CANVAS");
-  document.body.appendChild(this.canvas);
+  width = this.width;
+  height = this.height;
 
   this.ctx = this.canvas.getContext("2d");
 
@@ -105,8 +107,8 @@ function Canvas(width_, height_) {
         this.backgroundColor = r.color();
       } else {
         red = r;
-        green = g || r;
-        blue = b || r;
+        green = g === undefined ? r : g;
+        blue = b === undefined ? r : b;
         this.backgroundColor = color(red, green, blue);
         this.canvas.style.backgroundColor = color(red, green, blue);
       }
@@ -740,8 +742,8 @@ function randomVector(magnitude) {
   return vec;
 }
 
-function createCanvas(width_, height_) {
-  return new Canvas(width_, height_);
+function createCanvas(width_, height_, canvas_) {
+  return new Canvas(width_, height_, canvas_);
 }
 
 function createPoint(x, y) {
@@ -941,7 +943,7 @@ function exp(num) {
   return Math.exp(num);
 }
 
-function logh(num) {
+function log(num) {
   return Math.log(num);
 }
 
@@ -957,7 +959,7 @@ function write(text) {
   document.write(text);
 }
 
-function log(text) {
+function print(text) {
   console.log(text);
 }
 
