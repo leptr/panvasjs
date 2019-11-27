@@ -28,6 +28,11 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - **frameCount** - contains the number of frames that have passed since the loop started running
 - **frameRate** - contains the current number of frames per second
 - **mousePressed** - equals to `true` if the mouse is currently being pressed or `false` if it isn't
+- **Storage.save(name, data)** - saves data under the given name in the local storage
+- **Storage.load(name)** - return the data saved in the local storage under the given name
+- **Storage.removeItem(name)** - deletes the saved data under the given name
+- **Storage.clear()** - clears all the data saved in the local storage
+- **Storage.itemAtIndex(index)** - return the data saved under the given index. Comes in handy when you need to loop through saved data
 
 ## Functions
 
@@ -166,6 +171,22 @@ Takes a path to the image as an argument.
 - **filename** - contains the name of the image file
 - **image** - contains the image element
 
+## Sound
+
+Takes a path to the audio file as an argument/
+
+### Attributes
+
+- **path** - contains the path to the audio file
+- **filename** - contains the name of the audio file
+- **audio** - contains the audio element
+
+### Methods
+
+- `play()` - starts playing the audio
+- `pause()` - pauses the audio
+- `playPause()` - pauses the audio if it is playing, plays it if it is paused
+
 ## Point
 
 A point on the canvas
@@ -241,4 +262,4 @@ To use the latest version, add the following line of code into your head tag
 ```
 
 The lowest available version is 2.0.6\
-The latest version is 2.0.6
+The latest version is 2.0.7

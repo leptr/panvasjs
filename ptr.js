@@ -438,6 +438,7 @@ function Canvas(width_, height_, canvas_) {
     if (interval) {
       clearInterval(interval);
       interval = null;
+      if(typeof(onPause) === "function") onPause();
     } else {
       framerate(frameRate);
     }
@@ -683,6 +684,56 @@ function Image(path) {
   this.image = document.createElement("IMG");
   this.image.src = this.path;
 }
+
+function Sound(path) {
+  this.path = path;
+  this.filename = this.path.split("/").pop();
+
+  this.audio = document.createElement("AUDIO");
+  this.audio.src = this.path;
+
+  this.play = () => {
+    this.audio.play();
+  }
+
+  this.pause = () => {
+    this.audio.pause();
+  }
+
+  this.playPause = () => {
+    if(this.audio.paused) this.play();
+    else this.pause();
+  }
+}
+
+function Store() {
+  this.save = (name, data) => {
+    let d;
+    if(typeof(data) === "object") d =  JSON.stringify(data);
+    else d = data;
+    window.localStorage.setItem(name, d);
+  }
+
+  this.load = (name) => {
+    let d = window.localStorage.getItem(name);
+    let data = JSON.parse(d);
+    return data;
+  }
+
+  this.removeItem = (name) => {
+    window.localStorage.removeItem(name);
+  }
+
+  this.clearStorage = () => {
+    window.localStorage.clear();
+  }
+
+  this.itemAtKey = (key) => {
+    return  window.localStorage.key(key);
+  }
+}
+
+const Storage = new Store();
 
 function color(red, green, blue, alpha) {
   if (red === undefined) {
