@@ -438,7 +438,7 @@ function Canvas(width_, height_, canvas_) {
     if (interval) {
       clearInterval(interval);
       interval = null;
-      if(typeof(onPause) === "function") onPause();
+      if (typeof onPause === "function") onPause();
     } else {
       framerate(frameRate);
     }
@@ -694,43 +694,43 @@ function Sound(path) {
 
   this.play = () => {
     this.audio.play();
-  }
+  };
 
   this.pause = () => {
     this.audio.pause();
-  }
+  };
 
   this.playPause = () => {
-    if(this.audio.paused) this.play();
+    if (this.audio.paused) this.play();
     else this.pause();
-  }
+  };
 }
 
 function Store() {
   this.save = (name, data) => {
     let d;
-    if(typeof(data) === "object") d =  JSON.stringify(data);
+    if (typeof data === "object") d = JSON.stringify(data);
     else d = data;
     window.localStorage.setItem(name, d);
-  }
+  };
 
-  this.load = (name) => {
+  this.load = name => {
     let d = window.localStorage.getItem(name);
     let data = JSON.parse(d);
     return data;
-  }
+  };
 
-  this.removeItem = (name) => {
+  this.removeItem = name => {
     window.localStorage.removeItem(name);
-  }
+  };
 
   this.clearStorage = () => {
     window.localStorage.clear();
-  }
+  };
 
-  this.itemAtKey = (key) => {
-    return  window.localStorage.key(key);
-  }
+  this.itemAtKey = key => {
+    return window.localStorage.key(key);
+  };
 }
 
 const Storage = new Store();
@@ -1153,6 +1153,14 @@ function framerate(framerate) {
   return frameRate;
 }
 
+function include(file, callback) {
+  let element = document.createElement("SCRIPT");
+  element.src = file;
+  document.head.appendChild(element);
+
+  element.addEventListener("load", callback);
+}
+
 window.addEventListener("ready", () => {
   if (typeof preload === "function") preload();
 });
@@ -1170,6 +1178,7 @@ window.addEventListener("load", () => {
   DOWN = "down";
   UP = "up";
   if (typeof onMobile === "function" && mobile) onMobile();
+
   setup();
 });
 

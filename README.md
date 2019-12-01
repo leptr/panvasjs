@@ -39,6 +39,7 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - `setup()` - main function when the documents has been fully loaded
 - `update()` - main function called 60 times per second by default; can be changed using the framerate function
 - `preload()` - runs before anything else; useful for preloading images
+- `include(path, callback)` - includes another JavaScript file for further use; callback function is optional and is called after the file has been loaded
 - `noCanvas()` - creates a project without a canvas that still uses the update and setup functions
 - `framerate(newFramerate)` - changes the framerate to the new one
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
@@ -262,4 +263,4 @@ To use the latest version, add the following line of code into your head tag
 ```
 
 The lowest available version is 2.0.6\
-The latest version is 2.0.7
+The latest version is 2.0.8
