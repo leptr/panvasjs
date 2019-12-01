@@ -938,6 +938,10 @@ function randInt(num1, num2) {
   else return Math.floor(Math.random() * num1);
 }
 
+function setTitle(title) {
+  document.title = title;
+}
+
 function floor(num) {
   return Math.floor(num);
 }
@@ -1006,24 +1010,24 @@ function max() {
   return Math.max.apply(null, arguments);
 }
 
-function write(text) {
-  document.write(text);
+function write() {
+  document.write.apply(null, arguments);
 }
 
-function print(text) {
-  console.log(text);
+function print() {
+  console.log.apply(null, arguments);
 }
 
-function table(array) {
-  console.table(array);
+function table() {
+  console.table.apply(null, arguments);
 }
 
-function error(text) {
-  console.error(text);
+function error() {
+  console.error.apply(null, arguments);
 }
 
-function warn(text) {
-  console.warn(text);
+function warn() {
+  console.warn.apply(null, arguments);
 }
 
 function setText(element, text) {

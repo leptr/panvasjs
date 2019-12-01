@@ -42,6 +42,7 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - `include(path, callback)` - includes another JavaScript file for further use; callback function is optional and is called after the file has been loaded
 - `noCanvas()` - creates a project without a canvas that still uses the update and setup functions
 - `framerate(newFramerate)` - changes the framerate to the new one
+- `setTitle(title)` - sets the title of the page
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
 - `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1, while never returning the maximum value; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
 - `randInt(num1, num2)` - same as random(), except it returns a whole number; you must provide at least one argument
