@@ -7,6 +7,8 @@ function Pipe() {
 
   this.width = (this.margin / 4) * 3;
 
+  autoUpdate(this);
+
   this.show = () => {
     canvas.fill(0, 173, 43);
     canvas.rect(this.x, 0, this.width, this.y);

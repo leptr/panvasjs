@@ -33,6 +33,8 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - **Storage.removeItem(name)** - deletes the saved data under the given name
 - **Storage.clear()** - clears all the data saved in the local storage
 - **Storage.itemAtIndex(index)** - return the data saved under the given index. Comes in handy when you need to loop through saved data
+- **autoUpdate(object)** - automatically updates the object that is passed to it; usually called whilst creating an isntance of a class by calling `autoUpdate(this)`; requires the object to have the `update` method
+- **stopAutoUpdate(object)** - removes the given object from the auto update list
 
 ## Functions
 
@@ -115,6 +117,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - **maxHeight** - maximum canvas height; by default set to 99.000, from -33.000 to + 66.000
 - **canvas** - points to the actual canvas element that is displayed in the document
 - **ctx** - contains the context of the canvas element
+- **isPaused** - true or false based on whether the canvas is paused or not
 
 ### Methods
 

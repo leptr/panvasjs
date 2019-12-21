@@ -28,6 +28,8 @@ let hasACanvas = true;
 let touchX, touchY, prevTouchX, prevTouchY;
 let mousePressed = false;
 
+const updateable = [];
+
 function Canvas(width_, height_, canvas_) {
   this.width = width_ || 100;
   this.height = height_ || this.width;
@@ -56,6 +58,8 @@ function Canvas(width_, height_, canvas_) {
 
   this.backgroundColor = "rgb(0, 0, 0)";
   this.shouldClear = true;
+
+  this.isPaused = false;
 
   this.lnWdth = 1;
 
@@ -438,18 +442,23 @@ function Canvas(width_, height_, canvas_) {
     if (interval) {
       clearInterval(interval);
       interval = null;
+      if (typeof onPause === "function") onPause();
+      this.isPaused = true;
     } else {
       framerate(frameRate);
+      this.isPaused = false;
     }
   };
 
   this.pause = () => {
     clearInterval(interval);
     interval = null;
+    this.isPaused = true;
   };
 
   this.play = () => {
     framerate(frameRate);
+    this.isPaused = false;
   };
 
   this.drawImage = (image, sx, sy, swidth, sheight, x, y, wid, heig) => {
@@ -684,6 +693,56 @@ function Image(path) {
   this.image.src = this.path;
 }
 
+function Sound(path) {
+  this.path = path;
+  this.filename = this.path.split("/").pop();
+
+  this.audio = document.createElement("AUDIO");
+  this.audio.src = this.path;
+
+  this.play = () => {
+    this.audio.play();
+  };
+
+  this.pause = () => {
+    this.audio.pause();
+  };
+
+  this.playPause = () => {
+    if (this.audio.paused) this.play();
+    else this.pause();
+  };
+}
+
+function Store() {
+  this.save = (name, data) => {
+    let d;
+    if (typeof data === "object") d = JSON.stringify(data);
+    else d = data;
+    window.localStorage.setItem(name, d);
+  };
+
+  this.load = name => {
+    let d = window.localStorage.getItem(name);
+    let data = JSON.parse(d);
+    return data;
+  };
+
+  this.removeItem = name => {
+    window.localStorage.removeItem(name);
+  };
+
+  this.clearStorage = () => {
+    window.localStorage.clear();
+  };
+
+  this.itemAtKey = key => {
+    return window.localStorage.key(key);
+  };
+}
+
+const Storage = new Store();
+
 function color(red, green, blue, alpha) {
   if (red === undefined) {
     error("Invalid arguments for color function");
@@ -887,6 +946,10 @@ function randInt(num1, num2) {
   else return Math.floor(Math.random() * num1);
 }
 
+function setTitle(title) {
+  document.title = title;
+}
+
 function floor(num) {
   return Math.floor(num);
 }
@@ -955,24 +1018,24 @@ function max() {
   return Math.max.apply(null, arguments);
 }
 
-function write(text) {
-  document.write(text);
+function write() {
+  document.write.apply(null, arguments);
 }
 
-function print(text) {
-  console.log(text);
+function print() {
+  console.log.apply(null, arguments);
 }
 
-function table(array) {
-  console.table(array);
+function table() {
+  console.table.apply(null, arguments);
 }
 
-function error(text) {
-  console.error(text);
+function error() {
+  console.error.apply(null, arguments);
 }
 
-function warn(text) {
-  console.warn(text);
+function warn() {
+  console.warn.apply(null, arguments);
 }
 
 function setText(element, text) {
@@ -1102,6 +1165,14 @@ function framerate(framerate) {
   return frameRate;
 }
 
+function include(file, callback) {
+  let element = document.createElement("SCRIPT");
+  element.src = file;
+  document.head.appendChild(element);
+
+  element.addEventListener("load", callback);
+}
+
 window.addEventListener("ready", () => {
   if (typeof preload === "function") preload();
 });
@@ -1119,6 +1190,7 @@ window.addEventListener("load", () => {
   DOWN = "down";
   UP = "up";
   if (typeof onMobile === "function" && mobile) onMobile();
+
   setup();
 });
 
@@ -1127,8 +1199,25 @@ function noCanvas() {
   hasACanvas = false;
 }
 
+function autoUpdate(obj) {
+  if (typeof obj === "object") updateable.push(obj);
+  else if (obj === undefined)
+    print("The autoUpdate function requires an argument");
+  else print("The autoUpdate function requires an object");
+}
+
+function stopAutoUpdate(obj) {
+  for (let i = 0; i < updateable.length; i++) {
+    if (updateable[i] === obj) updateable.splice(i, 1);
+  }
+}
+
 function loop() {
   frameCount++;
+
   if (hasACanvas && can.shouldClear) can.clear();
+  for (let obj of updateable) {
+    if (typeof obj.update === "function") obj.update();
+  }
   if (typeof update === "function") update();
 }

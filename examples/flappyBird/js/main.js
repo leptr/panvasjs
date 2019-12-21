@@ -15,17 +15,17 @@ function setup() {
 
   pipeSpace = (width / 5) * 3;
 
+  bird = new Bird();
+
   set();
 }
 
 function update() {
   canvas.noStroke();
   bird.applyForce(gravity);
-  bird.update();
 
   for (let i = 0; i < pipes.length; i++) {
     let pipe = pipes[i];
-    pipe.update();
     if (
       bird.pos.x + bird.r >= pipe.x &&
       bird.pos.x - bird.r <= pipe.x + pipe.width
@@ -44,7 +44,10 @@ function update() {
     }
   }
   if (pipes[pipes.length - 1].x <= width - pipeSpace) pipes.push(new Pipe());
-  if (pipes[0].x == -pipes[0].width) pipes.splice(0, 1);
+  if (pipes[0].x == -pipes[0].width) {
+    stopAutoUpdate(pipes[0]);
+    pipes.splice(0, 1);
+  }
 
   canvas.textAlign("center");
   canvas.fill(255);
@@ -64,7 +67,6 @@ function touchStart() {
 }
 
 function set() {
-  bird = new Bird();
   pipes = [];
   pipes.push(new Pipe());
   score = 0;
@@ -74,6 +76,9 @@ function set() {
 
 function gameOver() {
   canvas.playPause();
+  for (let pipe of pipes) {
+    stopAutoUpdate(pipe);
+  }
   canvas.clear();
   ended = true;
   canvas.fill(255);

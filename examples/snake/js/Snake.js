@@ -4,6 +4,8 @@ function Snake() {
   this.velocity = createVector(0, 1);
   this.velocity.multiply(size);
 
+  autoUpdate(this);
+
   this.tail = [];
   this.total = 0;
 
@@ -18,6 +20,7 @@ function Snake() {
 
   this.grow = () => {
     this.total++;
+    stopAutoUpdate(food);
     food = new Food();
   };
 

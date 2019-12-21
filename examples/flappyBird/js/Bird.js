@@ -5,6 +5,8 @@ function Bird() {
   this.force = createVector(0, 0);
   this.maxForce = height / 65;
 
+  autoUpdate(this);
+
   this.jump = () => {
     this.force.set(0, -this.maxForce);
   };

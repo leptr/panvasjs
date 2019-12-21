@@ -11,8 +11,6 @@ function setup() {
 }
 
 function update() {
-  food.show();
-  snake.update();
   if (snake.pos.isOffScreen()) gameOver();
 }
 
@@ -25,9 +23,12 @@ function set() {
 
 function gameOver() {
   gameover = true;
+  stopAutoUpdate(snake);
+  stopAutoUpdate(food);
   canvas.pause();
   canvas.clear();
-  canvas.textAlign("center");
+  canvas.textAlign(CENTER);
+  canvas.fill(255);
   canvas.text("GAME OVER", width / 2, 220, 50, "Arial");
   let message = mobile ? "Tap the screen to restart" : "Press SPACE to restart";
   canvas.text(message, width / 2, 260, 30, "Arial");
@@ -36,7 +37,17 @@ function gameOver() {
 function keyDown() {
   switch (keyCode) {
     case 27:
-      canvas.playPause();
+      if (canvas.isPaused) {
+        canvas.play();
+      } else {
+        canvas.pause();
+        canvas.clear();
+        canvas.textAlign(CENTER);
+        canvas.fill(255);
+        canvas.text("Game paused", width / 2, height / 2, 60, "Arial");
+        let message = "Press ESC to continue";
+        canvas.text(message, width / 2, height / 2 + 40, 30, "Arial");
+      }
       break;
     case 32:
       if (gameover) set();
