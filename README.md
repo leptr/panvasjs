@@ -1,4 +1,4 @@
-# PtrJS
+# PanvasJS
 
 A framework for JavaScript canvas
 
@@ -254,17 +254,17 @@ A color class
 
 ## You can check out the example folder for some examples of code usage
 
-## Creating a new PtrJS project
+## Creating a new PanvasJS project
 
-To create a new PtrJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.
+To create a new PanvasJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default. You can change this by changing the url in the script tag in the index.html file.
 
 You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:\
- https://www.leptr.com/ptrjs/version/ptr.js or https://www.leptr.com/ptrjs/version/ptr.min.js \
+ https://www.leptr.com/panvasjs/version/panvas.js or https://www.leptr.com/panavsjs/version/panvas.min.js \
 To use the latest version, add the following line of code into your head tag
 
 ```
-<script src="https://www.leptr.com/ptrjs/latest/ptr.min.js"></script>
+<script src="https://www.leptr.com/panvasjs/latest/panvas.min.js"></script>
 ```
 
-The lowest available version is 2.0.6\
+The lowest available version is 2.0.8\
 The latest version is 2.0.8
