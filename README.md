@@ -4,11 +4,6 @@ A framework for JavaScript canvas
 
 ## Documentation
 
-##IMPORTANT NOTICE
-
-Since the version 2.0.6 the `log` function, that prints messages into the developer console, has been renamed to `print`, and the `logh` function, which returns the logarithm of the given number, has been renamed to `log`. **This can create errors when upgrading from version 2.0.5 and below to version 2.0.6 and up. Be wary of that**\
-Also, the versions below the version 2.0.6 are no longer available through the CDN due to a critical error. **The lowest version you can now use is 2.0.6**
-
 ## Variables
 
 - **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
@@ -268,4 +263,4 @@ To use the latest version, add the following line of code into your head tag
 ```
 
 The lowest available version is 2.0.8\
-The latest version is 2.0.8
+The latest version is 2.0.9
