@@ -28,13 +28,7 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - **frameCount** - contains the number of frames that have passed since the loop started running
 - **frameRate** - contains the current number of frames per second
 - **mousePressed** - equals to `true` if the mouse is currently being pressed or `false` if it isn't
-- **Storage.save(name, data)** - saves data under the given name in the local storage
-- **Storage.load(name)** - return the data saved in the local storage under the given name
-- **Storage.removeItem(name)** - deletes the saved data under the given name
-- **Storage.clear()** - clears all the data saved in the local storage
-- **Storage.itemAtIndex(index)** - return the data saved under the given index. Comes in handy when you need to loop through saved data
-- **autoUpdate(object)** - automatically updates the object that is passed to it; usually called whilst creating an isntance of a class by calling `autoUpdate(this)`; requires the object to have the `update` method
-- **stopAutoUpdate(object)** - removes the given object from the auto update list
+- **KEY** - an object containing every single key on the standard US keyboard. You can use this to check the keyCode value against the keys for easier development (e.g: `if (keyCode == KEY.UP_ARROW)`)
 
 ## Functions
 
@@ -102,6 +96,13 @@ Also, the versions below the version 2.0.6 are no longer available through the C
 - `removeChars(text, characters)` - takes two strings as an output; string characters contains all the characters that you want removed from the original string and returns the result
 - `removeCharAt(text, index)` - removes the character at the given index from the given string and returns the result
 - `replaceCharAt(text, index, replacement)` - replaces the character at the given index from the given string with the given replacement and returns the result
+- `Storage.save(name, data)` - saves data under the given name in the local storage
+- `Storage.load(name)` - return the data saved in the local storage under the given name
+- `Storage.removeItem(name)` - deletes the saved data under the given name
+- `Storage.clear()` - clears all the data saved in the local storage
+- `Storage.itemAtIndex(index)` - return the data saved under the given index. Comes in handy when you need to loop through saved data
+- `autoUpdate(object)` - automatically updates the object that is passed to it; usually called whilst creating an isntance of a class by calling `autoUpdate(this)`; requires the object to have the `update` method
+- `stopAutoUpdate(object)` - removes the given object from the auto update list
 
 ## Classes
 
