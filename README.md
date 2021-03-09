@@ -2,7 +2,9 @@
 
 A framework for JavaScript canvas
 
-## Documentation
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M03W2X1)
+
+# Documentation
 
 ## Variables
 
