@@ -121,7 +121,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `setSize(newWidth, newHeight)` - changes the dimensions of the canvas to the new dimensions; also updates the Width and Height global variables; can take one argument, in which case both width and height are set to that value
 - `fullScreen()` - makes the canvas take the whole window
 - `clear()` - clears the whole canvas; called by default at every frame
-- `background(r, g, b)` - changes the canvas background color to the given RGB values; if only one value is passed to the method, that value is taken as the red, green, and blue value
+- `background(r, g, b, a)` - changes the canvas background color to the given RGBA values; if only one value is passed to the method, that value is taken as the red, green, and blue value and alpha is 255
 - `fill(r, g, b, a)` - changes the fill color of the canvas; if only one value is passed to the method, that value is taken as the red, green, and blue value, and alpha is set to 255; to set the alpha value, you must pass all four arguments; alpha ranges from 0 to 255
 - `noFill()` - removes the fill
 - `stroke(r, g, b, a)` - changes the stroke color of the canvas; if only one value is passed to the method, that value is taken as the red, green, and blue value, and alpha is set to 255; to set the alpha value, you must pass all four arguments; alpha ranges from 0 to 255
@@ -263,4 +263,4 @@ To use the latest version, add the following line of code into your head tag
 ```
 
 The lowest available version is 2.0.8\
-The latest version is 2.0.9
+The latest version is 2.1.0

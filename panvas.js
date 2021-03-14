@@ -186,22 +186,24 @@ function Canvas(width_, height_, canvas_) {
     this.setSize(innerWidth, innerHeight);
   };
 
-  this.background = (r, g, b) => {
+  this.background = (r, g, b, a) => {
     if (r === undefined) {
       error('Invalid arguments for Canvas background method');
     } else {
-      let red, green, blue;
+      let red, green, blue, alpha;
       if (r instanceof Color) {
         red = r.red;
         green = r.green;
         blue = r.blue;
+        alpha = r.alpha;
         this.backgroundColor = r.color();
       } else {
         red = r;
         green = g === undefined ? r : g;
         blue = b === undefined ? r : b;
-        this.backgroundColor = color(red, green, blue);
-        this.canvas.style.backgroundColor = color(red, green, blue);
+        alpha = a === undefined ? 255 : g;
+        this.backgroundColor = color(red, green, blue, alpha);
+        this.canvas.style.backgroundColor = color(red, green, blue, alpha);
       }
     }
   };
