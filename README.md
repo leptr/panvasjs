@@ -148,7 +148,7 @@ Class Canvas is the main class of the framework. When an instance is created, it
 - `scale(widthScale, heightScale)` - scales the canvas proportionate to the given arguments; if only one argument is given, both width and height are scaled in proportion to that one argument; if no arguments are passed, canvas is returned to scale 1
 - `save()` - saves the current state of the canvas
 - `restore()` - restores the last saved state of the canvas
-- `screenshot()` - takes a screenshot of the canvas and saves it as a png file
+- `screenshot(name)` - takes a screenshot of the canvas and saves it as a png file with the given name; if no name is given, the file is saved as a random number
 - `playPause()` - switches between states of playin and paused
 - `pause()` - pauses the loop if it is unpaused
 - `play()` - unpauses the loop if it is paused

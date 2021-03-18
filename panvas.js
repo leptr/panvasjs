@@ -516,10 +516,16 @@ function Canvas(width_, height_, canvas_) {
     this.ctx.scale(wid, heig);
   };
 
-  this.screenshot = () => {
+  this.screenshot = (name) => {
     let d = document.createElement('a');
-    let number = randInt(999999);
-    let down = number + '.png';
+    let n;
+    if (name) {
+      n = name;
+    } else {
+      n = randInt(999999);
+    }
+
+    let down = n + '.png';
     d.setAttribute('download', down);
     d.href = this.canvas
       .toDataURL('image/png')
