@@ -263,3 +263,7 @@ To use the latest version, add the following line of code into your head tag
 ```
 <script src="https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.min.js"></script>
 ```
+
+## Notes
+
+I plan on revisiting this project soon and refactoring the whole thing using the newer ES6 syntax to keep this framework up to date, as it is currently using some outdated technology.
