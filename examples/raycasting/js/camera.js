@@ -1,8 +1,8 @@
 class Camera {
-  constructor(x, y, fov) {
+  constructor(x, y) {
     this.pos = createVector(x, y);
 
-    this.fov = fov;
+    this.fov = 60;
     this.angle = 0;
 
     this.rotateStep = 3;
