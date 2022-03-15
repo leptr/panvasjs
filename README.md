@@ -12,6 +12,7 @@ PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired 
 - **width** and **height** - contain the width and height of the canvas element
 - **innerWidth** and **innerHeight** - contain the inner width and inner height of the browser window
 - **mouseX** and **mouseY** - contain the current coordinates of the mouse on the screen
+- **cMouseX** and **cMouseY** - contain the current coordinates of the mouse on the canvas
 - **PI** - Pi constant
 - **TWO_PI** - two times Pi
 - **HALF_PI** - half Pi
@@ -42,17 +43,18 @@ PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired 
 - `randomizeColor(r, g, b)` - returns a random shade of the given color as an array of [red, green, blue] values
 - `floor(num)` - rounds the given number to the next lower integer
 - `ceil(num)` - rounds the given number to the next higher integer
-- `round(num)` - rounds the given number mathematically
+- `round(num)` - rounds the given number to the closest integer
 - `pow(num, pow)` - returns num to the power of pow
 - `sqrt(num)` - returns the square root of the given number
-- `sqr(num)` - returns the square of given number
+- `sqr(num)` - returns the square of the given number
 - `abs(num)` - returns the absolute value of the given number
-- `sin(angle)` - returns the sine of given angle
-- `cos(angle)` - returns the cosine of given angle
+- `sin(angle)` - returns the sine of the given angle
+- `cos(angle)` - returns the cosine of the given angle
 - `asin(num)` - returns the arcus sine of the given number
 - `acos(num)` - returns the arcus cosine of the given number
 - `tan(angle)` - returns the tangent of the given angle
 - `atan(num)` - returns the arcus tangnet of the given number
+- `atan2(x, y)` - returns the arcus tangnet of the two given number
 - `exp(num)` - return E to the power of num
 - `log(num)` - returns the natural logarith of num with base E
 - `min(nums)` - returns the lowest of the numbers given; takes multiple numbers as input
@@ -217,7 +219,7 @@ A 2D Vector object
 
 ### Methods
 
-- `set(newX, newY)` - changes vectors x and y coordinates to the new ones
+- `set(newX, newY)` - changes vectors x and y coordinates to the given values
 - `add(vector2)` - adds the two vectors and changes x and y coordinates to the result ones
 - `subtract(vector2)` - subtracts the two vectors and changes x and y coordinates to the result ones
 - `multiply(vector2)` - multiplies the two vectors and changes x and y coordinates to the result ones
@@ -226,7 +228,8 @@ A 2D Vector object
 - `rotate(angle)` - rotates the vector by the given angle
 - `magintude()` - returns the magnitude (length) of the vector
 - `magnitudeSqr()` - returns the magnitude squared
-- `setMagnitude(newMagnitude)` - sets the magnitude (length) of the vector to the new one
+- `setMagnitude(newMagnitude)` - sets the magnitude (length) of the vector to the given value
+- `limit(maxMagnitude)` - limits the magnitude (length) of the vector to the given value
 - `copy()` - returns a copy of the vector
 - `normalize()` - normalizes the vector (sets its magnitude to 1)
 - `distance(vector2)` - returns the distance to the given vector

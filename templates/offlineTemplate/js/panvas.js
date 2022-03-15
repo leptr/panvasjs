@@ -4,7 +4,7 @@ function isMobile() {
   );
 }
 
-let keyCode, mouseX, mouseY;
+let keyCode, mouseX, mouseY, cMouseX, cMouseY, canvasX, canvasY;
 let touches = [];
 let width, height;
 const PI = Math.PI;
@@ -122,7 +122,7 @@ function Canvas(width_, height_, canvas_) {
   this.height = height_ || this.width;
 
   if (!canvas_) {
-    this.canvas = document.createElement('CANVAS');
+    this.canvas = document.createElement("CANVAS");
     document.body.appendChild(this.canvas);
   } else this.canvas = canvas_;
 
@@ -131,7 +131,7 @@ function Canvas(width_, height_, canvas_) {
   width = this.width;
   height = this.height;
 
-  this.ctx = this.canvas.getContext('2d');
+  this.ctx = this.canvas.getContext("2d");
 
   can = this;
 
@@ -143,14 +143,14 @@ function Canvas(width_, height_, canvas_) {
   this.maxWidth = 99000;
   this.maxHeight = 99000;
 
-  this.backgroundColor = 'rgb(0, 0, 0)';
+  this.backgroundColor = "rgb(0, 0, 0)";
   this.shouldClear = true;
 
   this.isPaused = false;
 
   this.lnWdth = 1;
 
-  this.rectDrawMode = 'corner';
+  this.rectDrawMode = "corner";
 
   this.clear = () => {
     this.ctx.fillStyle = this.backgroundColor;
@@ -173,7 +173,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.setSize = (width_, height_) => {
     if (width_ === undefined && height_ === undefined) {
-      error('setSize function requires at least one argument');
+      error("setSize function requires at least one argument");
     } else {
       this.canvas.width = width_;
       this.canvas.height = height_ || width_;
@@ -188,7 +188,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.background = (r, g, b, a) => {
     if (r === undefined) {
-      error('Invalid arguments for Canvas background method');
+      error("Invalid arguments for Canvas background method");
     } else {
       let red, green, blue, alpha;
       if (r instanceof Color) {
@@ -210,7 +210,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.fill = (r, g, b, a) => {
     if (r === undefined) {
-      error('Invalid arguments for Canvas fill method');
+      error("Invalid arguments for Canvas fill method");
     } else {
       let red, green, blue, alpha;
       if (r instanceof Color) {
@@ -234,12 +234,12 @@ function Canvas(width_, height_, canvas_) {
   };
 
   this.noFill = () => {
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
   };
 
   this.stroke = (r, g, b, a) => {
     if (r === undefined) {
-      error('Invalid arguments for Canvas stroke method');
+      error("Invalid arguments for Canvas stroke method");
     } else {
       let red, green, blue, alpha;
       if (r instanceof Color) {
@@ -263,7 +263,7 @@ function Canvas(width_, height_, canvas_) {
   };
 
   this.noStroke = () => {
-    this.ctx.strokeStyle = 'rgba(0, 0, 0, 0)';
+    this.ctx.strokeStyle = "rgba(0, 0, 0, 0)";
   };
 
   this.lineWidth = (width_) => {
@@ -278,7 +278,7 @@ function Canvas(width_, height_, canvas_) {
       y1 === undefined ||
       y2 === undefined
     )
-      error('Invalid arguments for Canvas line method');
+      error("Invalid arguments for Canvas line method");
     else {
       this.ctx.beginPath();
       this.ctx.moveTo(x1, y1);
@@ -289,7 +289,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.lineFromVector = (vector) => {
     if (!vector || !(vector instanceof Vector))
-      error('Invalid argument for Canvas lineFromVector method');
+      error("Invalid argument for Canvas lineFromVector method");
     else {
       let x1 = vector.x;
       let y1 = vector.y;
@@ -309,7 +309,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.lineFromAngle = (x, y, angle, length) => {
     if (x === undefined)
-      error('Invalid arguments for Canvas lineFromAngle method');
+      error("Invalid arguments for Canvas lineFromAngle method");
     else {
       let x1 = x;
       let y1 = y;
@@ -333,7 +333,7 @@ function Canvas(width_, height_, canvas_) {
       width_ === undefined &&
       height_ === undefined
     ) {
-      error('Invalid arguments for Canvas rect method');
+      error("Invalid arguments for Canvas rect method");
     } else {
       let x1 = x;
       let y1 = y;
@@ -350,10 +350,10 @@ function Canvas(width_, height_, canvas_) {
         heig = height_;
       }
 
-      if (this.rectDrawMode === 'corner') {
+      if (this.rectDrawMode === "corner") {
         this.ctx.fillRect(x1, y1, wid, heig);
         this.ctx.strokeRect(x1, y1, wid, heig);
-      } else if (this.rectDrawMode === 'center') {
+      } else if (this.rectDrawMode === "center") {
         this.ctx.fillRect(x1 - wid / 2, y1 - heig / 2, wid, heig);
         this.ctx.strokeRect(x1 - wid / 2, y1 - heig / 2, wid, heig);
       }
@@ -361,13 +361,13 @@ function Canvas(width_, height_, canvas_) {
   };
 
   this.rectMode = (mode) => {
-    if (mode !== 'center' && mode !== 'corner')
-      error('Invalid argument for Canvas rectMode method');
+    if (mode !== "center" && mode !== "corner")
+      error("Invalid argument for Canvas rectMode method");
     else this.rectDrawMode = mode;
   };
 
   this.point = (x, y) => {
-    if (x === undefined) error('Invalid arguments for Canvas point method');
+    if (x === undefined) error("Invalid arguments for Canvas point method");
     else {
       let x1 = x;
       let y1 = y || x;
@@ -383,7 +383,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.circle = (x, y, r) => {
     if (x === undefined || y === undefined || r === undefined) {
-      error('Invalid arguments for Canvas circle method');
+      error("Invalid arguments for Canvas circle method");
     } else {
       let x1 = x;
       let y1 = y;
@@ -405,7 +405,7 @@ function Canvas(width_, height_, canvas_) {
       startAngle === undefined ||
       endAngle === undefined
     ) {
-      error('Invalid arguments for Canvas arc method');
+      error("Invalid arguments for Canvas arc method");
     } else {
       let x1 = x;
       let y1 = y;
@@ -425,7 +425,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.ellipse = (x, y, width_, height_, rotation) => {
     if (x === undefined || height === undefined)
-      error('Invalid arguments for Canvas ellipse method');
+      error("Invalid arguments for Canvas ellipse method");
     else {
       let x1 = x;
       let y1 = y;
@@ -443,7 +443,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.beginShape = (x, y) => {
     if (x === undefined)
-      error('Invalid arguments for Canvas beginShape method');
+      error("Invalid arguments for Canvas beginShape method");
     else {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -451,7 +451,7 @@ function Canvas(width_, height_, canvas_) {
   };
 
   this.vertex = (x, y) => {
-    if (x === undefined) error('Invalid arguments for Canvas vertex method');
+    if (x === undefined) error("Invalid arguments for Canvas vertex method");
     else {
       this.ctx.lineTo(x, y);
     }
@@ -471,23 +471,23 @@ function Canvas(width_, height_, canvas_) {
       fontSize === undefined ||
       fontName === undefined
     )
-      error('Invalid arguments for Canvas text method');
+      error("Invalid arguments for Canvas text method");
     else {
-      this.ctx.font = fontSize.toString() + 'px ' + fontName;
+      this.ctx.font = fontSize.toString() + "px " + fontName;
       this.ctx.fillText(text, x, y);
       this.ctx.strokeText(text, x, y);
     }
   };
 
   this.textAlign = (align) => {
-    if (!align) error('You need to specify the text alignment');
+    if (!align) error("You need to specify the text alignment");
     else {
       this.ctx.textAlign = align;
     }
   };
 
   this.translate = (x, y) => {
-    if (x === undefined) error('Invalid arguments for Canvas translate method');
+    if (x === undefined) error("Invalid arguments for Canvas translate method");
     else {
       if (y === undefined) {
         y = x;
@@ -516,14 +516,20 @@ function Canvas(width_, height_, canvas_) {
     this.ctx.scale(wid, heig);
   };
 
-  this.screenshot = () => {
-    let d = document.createElement('a');
-    let number = randInt(999999);
-    let down = number + '.png';
-    d.setAttribute('download', down);
+  this.screenshot = (name) => {
+    let d = document.createElement("a");
+    let n;
+    if (name) {
+      n = name;
+    } else {
+      n = randInt(999999);
+    }
+
+    let down = n + ".png";
+    d.setAttribute("download", down);
     d.href = this.canvas
-      .toDataURL('image/png')
-      .replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+      .toDataURL("image/png")
+      .replace(/^data:image\/[^;]/, "data:application/octet-stream");
     d.click();
   };
 
@@ -531,7 +537,7 @@ function Canvas(width_, height_, canvas_) {
     if (interval) {
       clearInterval(interval);
       interval = null;
-      if (typeof onPause === 'function') onPause();
+      if (typeof onPause === "function") onPause();
       this.isPaused = true;
     } else {
       framerate(frameRate);
@@ -552,7 +558,7 @@ function Canvas(width_, height_, canvas_) {
 
   this.drawImage = (image, sx, sy, swidth, sheight, x, y, wid, heig) => {
     if (image === undefined)
-      error('Invalid arguments for Canvas drawImage method');
+      error("Invalid arguments for Canvas drawImage method");
     else {
       if (swidth === undefined) this.ctx.drawImage(image.image, sx, sy);
       else if (swidth !== undefined && sheight !== undefined && x === undefined)
@@ -585,7 +591,7 @@ function Vector(x, y) {
 
   this.set = (x, y) => {
     if (x === undefined && y === undefined) {
-      error('No X or Y value has been passed to the Vector set function');
+      error("No X or Y value has been passed to the Vector set function");
     } else {
       this.previousX = x;
       this.previousX = y;
@@ -597,7 +603,7 @@ function Vector(x, y) {
 
   this.add = (vec2) => {
     if (x === undefined && y === undefined) {
-      error('No vector has been passed to the Vector add function');
+      error("No vector has been passed to the Vector add function");
     } else {
       this.previousX = this.x;
       this.previousY = this.y;
@@ -610,7 +616,7 @@ function Vector(x, y) {
 
   this.subtract = (vec2) => {
     if (x === undefined && y === undefined) {
-      error('No vector has been passed to the Vector subtract function');
+      error("No vector has been passed to the Vector subtract function");
     } else {
       this.previousX = this.x;
       this.previousY = this.y;
@@ -666,6 +672,10 @@ function Vector(x, y) {
     this.y *= ratio;
   };
 
+  this.limit = (maxMag) => {
+    if (this.magnitude() > maxMag) this.setMagnitude(maxMag);
+  };
+
   this.copy = () => {
     return new Vector(this.x, this.y);
   };
@@ -687,7 +697,7 @@ function Vector(x, y) {
 
   this.distance = (vec2) => {
     if (vec2 === undefined)
-      error('You need to pass another vector to the Vector distance method');
+      error("You need to pass another vector to the Vector distance method");
     else return sqrt(sqr(this.x - vec2.x) + sqr(this.y - vec2.y));
   };
 
@@ -699,7 +709,7 @@ function Vector(x, y) {
 
   this.lerp = (vec2, step) => {
     if (vec2 === undefined || step === undefined)
-      error('Invalid arguments for Vector lerp method');
+      error("Invalid arguments for Vector lerp method");
     else {
       this.x = lerp(this.x, vec2.x, step);
       this.y = lerp(this.y, vec2.y, step);
@@ -724,7 +734,7 @@ function Point(x, y) {
 
   this.distance = (pt2) => {
     if (pt2 === undefined)
-      error('You need to pass another point to the Point distance method');
+      error("You need to pass another point to the Point distance method");
     else return sqrt(sqr(this.x - pt2.x) + sqr(this.y - pt2.y));
   };
 
@@ -776,17 +786,17 @@ function Color(red, green, blue, alpha) {
 
 function Image(path) {
   this.path = path;
-  this.filename = this.path.split('/').pop();
+  this.filename = this.path.split("/").pop();
 
-  this.image = document.createElement('IMG');
+  this.image = document.createElement("IMG");
   this.image.src = this.path;
 }
 
 function Sound(path) {
   this.path = path;
-  this.filename = this.path.split('/').pop();
+  this.filename = this.path.split("/").pop();
 
-  this.audio = document.createElement('AUDIO');
+  this.audio = document.createElement("AUDIO");
   this.audio.src = this.path;
 
   this.play = () => {
@@ -806,7 +816,7 @@ function Sound(path) {
 function Store() {
   this.save = (name, data) => {
     let d;
-    if (typeof data === 'object') d = JSON.stringify(data);
+    if (typeof data === "object") d = JSON.stringify(data);
     else d = data;
     window.localStorage.setItem(name, d);
   };
@@ -834,7 +844,7 @@ const Storage = new Store();
 
 function color(red, green, blue, alpha) {
   if (red === undefined) {
-    error('Invalid arguments for color function');
+    error("Invalid arguments for color function");
   } else {
     let r, g, b, a;
     if (green !== undefined && blue === undefined) {
@@ -854,12 +864,12 @@ function color(red, green, blue, alpha) {
       a = alpha / 255;
     }
 
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
   }
 }
 
 function distance(x1, y1, x2, y2) {
-  if (!x1 && !y1) error('Invalid arguments for distance function');
+  if (!x1 && !y1) error("Invalid arguments for distance function");
   else {
     if (x2 === undefined && y2 === undefined) {
       if (
@@ -868,7 +878,7 @@ function distance(x1, y1, x2, y2) {
         y1 instanceof Point
       ) {
         return sqrt(sqr(x1.x - y1.x) + sqr(x1.y - y1.y));
-      } else error('Invalid arguments for distance function');
+      } else error("Invalid arguments for distance function");
     } else {
       return sqrt(sqr(x1 - x2) + sqr(y1 - y2));
     }
@@ -904,7 +914,7 @@ function randomPoint() {
 
 function isInArray(array, element) {
   if (array === undefined || element === undefined)
-    error('Invalid arguments for isInArray function');
+    error("Invalid arguments for isInArray function");
   else {
     for (let i = 0; i < array.length; i++) {
       if (array[i] === element) {
@@ -917,7 +927,7 @@ function isInArray(array, element) {
 
 function removeFromArray(array, element) {
   if (array === undefined || element === undefined)
-    error('Invalid arguments for removeFromArray function');
+    error("Invalid arguments for removeFromArray function");
   else {
     let i = isInArray(array, element);
     if (i === false) return;
@@ -952,7 +962,7 @@ function constrain(num, min, max) {
 
 function lerp(value1, value2, step) {
   if (value1 === undefined || value2 === undefined || step === undefined)
-    error('Invalid arguments for lerp function');
+    error("Invalid arguments for lerp function");
   else {
     return (1 - step) * value1 + step * value2;
   }
@@ -963,9 +973,9 @@ function map(num, a, b, c, d) {
 }
 
 function joinArray(array, spacing) {
-  if (!array) error('Invalid arguments for joinArray function');
+  if (!array) error("Invalid arguments for joinArray function");
   else {
-    let result = '';
+    let result = "";
     for (let item of array) {
       result += item;
       if (spacing) result += spacing;
@@ -985,7 +995,7 @@ function removeChars(text, characters) {
 }
 
 function replaceCharAt(text, index, replacement) {
-  let split = text.split('');
+  let split = text.split("");
   split[index] = replacement;
   string = joinArray(split);
   return string;
@@ -993,7 +1003,7 @@ function replaceCharAt(text, index, replacement) {
 
 function removeCharAt(text, index) {
   let string = text;
-  let split = string.split('');
+  let split = string.split("");
   split.splice(index, 1);
   string = joinArray(split);
   return string;
@@ -1029,7 +1039,7 @@ function random(num1, num2) {
 
 function randInt(num1, num2) {
   if (num1 === undefined && num2 === undefined)
-    error('At least one argument is needed for the randInt function');
+    error("At least one argument is needed for the randInt function");
   else if (num2 !== undefined)
     return Math.floor(Math.random() * (num2 - num1) + num1);
   else return Math.floor(Math.random() * num1);
@@ -1075,28 +1085,32 @@ function cos(angle) {
   return Math.cos((angle * PI) / 180);
 }
 
-function acos(num) {
-  return Math.acos(num);
+function acos() {
+  return Math.acos.apply(null, arguments);
 }
 
-function asin(num) {
-  return Math.asin(num);
+function asin() {
+  return Math.asin.apply(null, arguments);
 }
 
-function tan(num) {
-  return Math.tan(num);
+function tan() {
+  return Math.tan.apply(null, arguments);
 }
 
-function atan(num) {
-  return Math.atan(num);
+function atan() {
+  return Math.atan.apply(null, arguments);
 }
 
-function exp(num) {
-  return Math.exp(num);
+function atan2() {
+  return Math.atan2.apply(null, arguments);
 }
 
-function log(num) {
-  return Math.log(num);
+function exp() {
+  return Math.exp.apply(null, arguments);
+}
+
+function log() {
+  return Math.log.apply(null, arguments);
 }
 
 function min() {
@@ -1131,33 +1145,33 @@ function setText(element, text) {
   document.getElementById(element).innerHtml = text;
 }
 
-window.addEventListener('keydown', (e) => {
-  if (typeof keyDown === 'function') {
+window.addEventListener("keydown", (e) => {
+  if (typeof keyDown === "function") {
     keyCode = e.keyCode;
     keyDown();
   }
 });
 
-window.addEventListener('keyup', (e) => {
-  if (typeof keyUp === 'function') {
+window.addEventListener("keyup", (e) => {
+  if (typeof keyUp === "function") {
     keyCode = e.keyCode;
     keyUp();
   }
 });
 
-window.addEventListener('touchstart', (e) => {
+window.addEventListener("touchstart", (e) => {
   let touches = e.touches;
   touchX = touches[0].clientX;
   touchY = touches[0].clientY;
   startTouchX = touchX;
   startTouchY = touchY;
   calledFunction = false;
-  if (typeof touchStart === 'function') {
+  if (typeof touchStart === "function") {
     touchStart(touches);
   }
 });
 
-window.addEventListener('touchmove', (e) => {
+window.addEventListener("touchmove", (e) => {
   let touches = e.touches;
   touchX = touches[0].clientX;
   touchY = touches[0].clientY;
@@ -1167,81 +1181,93 @@ window.addEventListener('touchmove', (e) => {
 
   if (distX >= 100 && distY <= 10 && distY >= -10 && !calledFunction) {
     dir = RIGHT;
-    if (typeof swipe === 'function') {
+    if (typeof swipe === "function") {
       calledFunction = true;
-      log('Swiping ' + dir);
+      log("Swiping " + dir);
       swipe(dir);
     }
   } else if (distX <= -100 && distY <= 10 && distY >= -10 && !calledFunction) {
     dir = LEFT;
-    if (typeof swipe === 'function') {
+    if (typeof swipe === "function") {
       calledFunction = true;
-      log('Swiping ' + dir);
+      log("Swiping " + dir);
       swipe(dir);
     }
   } else if (distY <= -100 && distX <= 10 && distX >= -10 && !calledFunction) {
     dir = DOWN;
-    if (typeof swipe === 'function') {
+    if (typeof swipe === "function") {
       calledFunction = true;
-      log('Swiping ' + dir);
+      log("Swiping " + dir);
       swipe(dir);
     }
   } else if (distY >= 100 && distX <= 10 && distX >= -10 && !calledFunction) {
     dir = UP;
-    if (typeof swipe === 'function') {
+    if (typeof swipe === "function") {
       calledFunction = true;
-      log('Swiping ' + dir);
+      log("Swiping " + dir);
       swipe(dir);
     }
   }
 
-  if (typeof touchMove === 'function') {
+  if (typeof touchMove === "function") {
     touchMove(touches);
   }
 });
 
-window.addEventListener('touchend', (e) => {
+window.addEventListener("touchend", (e) => {
   let touches = e.touches;
-  if (typeof touchEnd === 'function') {
+  if (typeof touchEnd === "function") {
     touchEnd(touches);
   }
 });
 
-window.addEventListener('mousedown', (e) => {
+window.addEventListener("mousedown", (e) => {
   mousePressed = true;
   if (!mobile) {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (typeof mouseDown === 'function') {
+    if (can) {
+      cMouseX = constrain(mouseX - canvasX, 0, can.width);
+      cMouseY = constrain(mouseY - canvasY, 0, can.height);
+    }
+    if (typeof mouseDown === "function") {
       mouseDown();
     }
   }
 });
 
-window.addEventListener('mousemove', (e) => {
+window.addEventListener("mousemove", (e) => {
   if (!mobile) {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (typeof mouseMove === 'function') {
+    if (can) {
+      cMouseX = constrain(mouseX - canvasX, 0, can.width);
+      cMouseY = constrain(mouseY - canvasY, 0, can.height);
+    }
+    if (typeof mouseMove === "function") {
       mouseMove();
     }
   }
 });
 
-window.addEventListener('mouseup', (e) => {
+window.addEventListener("mouseup", (e) => {
   mousePressed = false;
   if (!mobile) {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (typeof mouseUp === 'function') {
+    if (can) {
+      cMouseX = constrain(mouseX - canvasX, 0, can.width);
+      cMouseY = constrain(mouseY - canvasY, 0, can.height);
+    }
+    if (typeof mouseUp === "function") {
       mouseUp();
     }
   }
 });
 
 function framerate(framerate) {
-  if (framerate && typeof framerate !== 'number') {
-    error('Invalid argument for framerate function');
+  if (framerate && typeof framerate !== "number") {
+    error("Invalid argument for framerate function");
   } else {
     if (interval) {
       clearInterval(interval);
@@ -1255,30 +1281,30 @@ function framerate(framerate) {
 }
 
 function include(file, callback) {
-  let element = document.createElement('SCRIPT');
+  let element = document.createElement("SCRIPT");
   element.src = file;
   document.head.appendChild(element);
 
-  element.addEventListener('load', callback);
+  element.addEventListener("load", callback);
 }
 
-window.addEventListener('ready', () => {
-  if (typeof preload === 'function') preload();
+window.addEventListener("ready", () => {
+  if (typeof preload === "function") preload();
 });
 
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   mobile = isMobile();
   innerWidth = window.innerWidth;
   innerHeight = window.innerHeight;
-  END = 'end';
-  START = 'start';
-  CORNER = 'corner';
-  CENTER = 'center';
-  RIGHT = 'right';
-  LEFT = 'left';
-  DOWN = 'down';
-  UP = 'up';
-  if (typeof onMobile === 'function' && mobile) onMobile();
+  END = "end";
+  START = "start";
+  CORNER = "corner";
+  CENTER = "center";
+  RIGHT = "right";
+  LEFT = "left";
+  DOWN = "down";
+  UP = "up";
+  if (typeof onMobile === "function" && mobile) onMobile();
 
   setup();
 });
@@ -1289,10 +1315,10 @@ function noCanvas() {
 }
 
 function autoUpdate(obj) {
-  if (typeof obj === 'object') updateable.push(obj);
+  if (typeof obj === "object") updateable.push(obj);
   else if (obj === undefined)
-    print('The autoUpdate function requires an argument');
-  else print('The autoUpdate function requires an object');
+    print("The autoUpdate function requires an argument");
+  else print("The autoUpdate function requires an object");
 }
 
 function stopAutoUpdate(obj) {
@@ -1304,9 +1330,14 @@ function stopAutoUpdate(obj) {
 function loop() {
   frameCount++;
 
-  if (hasACanvas && can.shouldClear) can.clear();
-  for (let obj of updateable) {
-    if (typeof obj.update === 'function') obj.update();
+  if (hasACanvas && can.shouldClear) {
+    let rct = can.canvas.getBoundingClientRect();
+    canvasX = rct.left + window.scrollX;
+    canvasY = rct.top + window.scrollY;
+    can.clear();
   }
-  if (typeof update === 'function') update();
+  for (let obj of updateable) {
+    if (typeof obj.update === "function") obj.update();
+  }
+  if (typeof update === "function") update();
 }
