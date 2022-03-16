@@ -672,8 +672,17 @@ function Vector(x, y) {
     this.y *= ratio;
   };
 
-  this.limit = (maxMag) => {
-    if (this.magnitude() > maxMag) this.setMagnitude(maxMag);
+  this.limit = (minMag, maxMag) => {
+    let maxM = minMag;
+    let minM = null;
+
+    if (maxMag) {
+      maxM = maxMag;
+      minM = minMag;
+    }
+
+    if (minM && this.magnitude() < minM) this.setMagnitude(minM);
+    if (this.magnitude() > maxM) this.setMagnitude(maxM);
   };
 
   this.copy = () => {

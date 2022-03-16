@@ -229,7 +229,7 @@ A 2D Vector object
 - `magintude()` - returns the magnitude (length) of the vector
 - `magnitudeSqr()` - returns the magnitude squared
 - `setMagnitude(newMagnitude)` - sets the magnitude (length) of the vector to the given value
-- `limit(maxMagnitude)` - limits the magnitude (length) of the vector to the given value
+- `limit(minMagnitude, maxMagnitude)` - limits the magnitude (length) of the vector to the given minimum and maximum magnitude; if only one argument is provided, it will be used as the maximum magnitude
 - `copy()` - returns a copy of the vector
 - `normalize()` - normalizes the vector (sets its magnitude to 1)
 - `distance(vector2)` - returns the distance to the given vector
