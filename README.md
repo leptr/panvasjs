@@ -2,11 +2,13 @@
 
 PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired by p5. It is a barebones game engine made for people who like the challenge of making 2D video games practically from scratch with just the basic tools for graphics display and mathematical calculations. It poses a challenge of coding all the logic yourself, including the physics simulations, drawing more complicated shapes, complex math, and much more. It can also be used for simpler things than video games, such as animations and simulations.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M03W2X1)
+# Developer notes
+
+I plan on refactoring this project soon to update the syntax to ES6, as this code is rather old now and not very easily readable and editable. I haven't had the time to work on personal projects much in the last few years due to my job and not having much free time. Hopefully I get to it soon enough.
 
 # Documentation
 
-## Variables
+## Global variables
 
 - **mobile** - variable that is `true` if the code is opened from a mobile device or `false` if it is not; useful if you have special control buttons for mobile devices
 - **width** and **height** - contain the width and height of the canvas element
@@ -266,7 +268,3 @@ To use the latest version, add the following line of code into your head tag
 ```
 <script src="https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.min.js"></script>
 ```
-
-## Notes
-
-I plan on revisiting this project soon and refactoring the whole thing using the newer ES6 syntax to keep this framework up to date, as it is currently using some outdated technology.
