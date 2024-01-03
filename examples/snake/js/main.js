@@ -1,126 +1,46 @@
+// Include the snake and food files
+include("./js/snake.js");
+include("./js/food.js");
+
 function setup() {
+  // Create the canvas
   canvas = createCanvas(400);
   canvas.background(51);
 
+  // Set the global scale of the elements we will draw later
   scale = 20;
   size = width / scale;
 
+  // Lower the refresh rate so the game is slower
+  // This is not a good practice as lowering the refresh rate slows down everything in the script
+  // However, it is fine in this case
   framerate(10);
 
+  // Create the new instances of the snake and the food
   snake = new Snake();
   food = new Food();
 }
 
 function update() {
+  // Call the snake and food update methods
   food.update();
   snake.update();
 }
 
-class Snake {
-  constructor() {
-    this.pos = createVector(0, 0);
-    this.size = scale;
-
-    this.dir = RIGHT;
-
-    this.tail = [];
-  }
-
-  draw() {
-    canvas.noStroke();
-    canvas.fill(255);
-    canvas.rect(this.pos.x * scale, this.pos.y * scale, this.size, this.size);
-
-    for (let piece of this.tail) {
-      canvas.rect(piece.x * scale, piece.y * scale, this.size, this.size);
-    }
-  }
-
-  move() {
-    for (let i = 0; i < this.tail.length - 1; i++) {
-      this.tail[i] = this.tail[i + 1];
-      if (this.pos.x === this.tail[i].x && this.pos.y === this.tail[i].y)
-        this.death();
-    }
-
-    if (this.pos.x === food.pos.x && this.pos.y === food.pos.y) {
-      this.tail.push({ x: this.pos.x, y: this.pos.y });
-      food.relocate();
-    } else {
-      this.tail[this.tail.length - 1] = { x: this.pos.x, y: this.pos.y };
-    }
-
-    switch (this.dir) {
-      case UP:
-        this.pos.y--;
-        break;
-      case RIGHT:
-        this.pos.x++;
-        break;
-      case DOWN:
-        this.pos.y++;
-        break;
-      case LEFT:
-        this.pos.x--;
-        break;
-    }
-
-    if (this.pos.x < 0) this.pos.x = size;
-    else if (this.pos.x >= size) this.pos.x = 0;
-
-    if (this.pos.y < 0) this.pos.y = size;
-    else if (this.pos.y >= size) this.pos.y = 0;
-  }
-
-  death() {
-    this.pos = createVector(0, 0);
-    this.tail = [];
-
-    food.relocate();
-  }
-
-  update() {
-    this.move();
-    this.draw();
-  }
-}
-
+// The keyDown function is called by PanvasJS every time a key is pressed
 function keyDown() {
   switch (keyCode) {
-    case KEY.UP_ARROW:
-      if (snake.dir !== DOWN) snake.dir = UP;
+    case KEY.UP_ARROW: // If the key is up arrow, move up
+      if (snake.dir !== DOWN) snake.dir = UP; // If the snake is moving up, it cannot move down because it will collide with itself
       break;
-    case KEY.RIGHT_ARROW:
-      if (snake.dir !== LEFT) snake.dir = RIGHT;
+    case KEY.RIGHT_ARROW: // If the key is right arrow, move right
+      if (snake.dir !== LEFT) snake.dir = RIGHT; // If the snake is moving left, it cannot move right because it will collide with itself
       break;
-    case KEY.DOWN_ARROW:
-      if (snake.dir !== UP) snake.dir = DOWN;
+    case KEY.DOWN_ARROW: // If the key is down arrow, move down
+      if (snake.dir !== UP) snake.dir = DOWN; // If the snake is moving down, it cannot move up because it will collide with itself
       break;
-    case KEY.LEFT_ARROW:
-      if (snake.dir !== RIGHT) snake.dir = LEFT;
+    case KEY.LEFT_ARROW: // If the key is left arrow, move left
+      if (snake.dir !== RIGHT) snake.dir = LEFT; // If the snake is moving right, it cannot move left because it will collide with itself
       break;
-  }
-}
-
-class Food {
-  constructor() {
-    this.pos = createVector(0, 0);
-    this.size = scale;
-
-    this.relocate();
-  }
-
-  relocate() {
-    this.pos = createVector(randInt(size), randInt(size));
-  }
-
-  draw() {
-    canvas.noStroke();
-    canvas.fill(255, 85, 85);
-    canvas.rect(this.pos.x * scale, this.pos.y * scale, this.size, this.size);
-  }
-
-  update() {
-    this.draw();
   }
 }
