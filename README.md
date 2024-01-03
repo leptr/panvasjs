@@ -1,10 +1,6 @@
 # PanvasJS
 
-PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired by p5. It is a barebones game engine made for people who like the challenge of making 2D video games practically from scratch with just the basic tools for graphics display and mathematical calculations. It poses a challenge of coding all the logic yourself, including the physics simulations, drawing more complicated shapes, complex math, and much more. It can also be used for simpler things than video games, such as animations and simulations.
-
-# Developer notes
-
-I plan on refactoring this project soon to update the syntax to ES6, as this code is rather old now and not very easily readable and editable. I haven't had the time to work on personal projects much in the last few years due to my job and not having much free time. Hopefully I get to it soon enough.
+PanvasJS is a JavaScript library for the HTML canvas element heavily inspired by p5. It is a barebones game engine made for people who like the challenge of making 2D video games practically from scratch with just the basic tools for graphics display and mathematical calculations. It poses a challenge of coding all the logic yourself, including the physics simulations, drawing more complicated shapes, complex math, and much more. It can also be used for simpler things than video games, such as animations and simulations.
 
 # Documentation
 
