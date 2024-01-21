@@ -1,7 +1,9 @@
 // isMobile function determines if the web page is opened on a mobile device
 
 function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 }
 
 // Variables used for handling user interaction
@@ -139,9 +141,6 @@ class Canvas {
       document.body.appendChild(this.canvas);
     } else this.canvas = canvas_;
 
-    // Set the default canvas background color
-    this.background = 0;
-
     // Update global variables
     width = this.width;
     height = this.height;
@@ -178,7 +177,12 @@ class Canvas {
   // clear method is used for "clearing" the canvas by drawing a square over it
   clear() {
     this.ctx.fillStyle = this.backgroundColor;
-    this.ctx.fillRect(-this.maxWidth / 3, -this.maxHeight / 3, (this.maxWidth / 3) * 2, (this.maxHeight / 3) * 2);
+    this.ctx.fillRect(
+      -this.maxWidth / 3,
+      -this.maxHeight / 3,
+      (this.maxWidth / 3) * 2,
+      (this.maxHeight / 3) * 2
+    );
   }
 
   // noClear method allows the user to disable clearing
@@ -317,7 +321,13 @@ class Canvas {
   // line method allows the user to draw a line on the canvas
   line(x1, y1, x2, y2) {
     // Handle bad arguments
-    if (x1 === undefined || x2 === undefined || y1 === undefined || y2 === undefined) error("Invalid arguments for Canvas line method");
+    if (
+      x1 === undefined ||
+      x2 === undefined ||
+      y1 === undefined ||
+      y2 === undefined
+    )
+      error("Invalid arguments for Canvas line method");
     else {
       // Draw a line based on the provided arguments
       this.ctx.beginPath();
@@ -330,7 +340,8 @@ class Canvas {
   // lineFromVector method allows the user to draw a line from a Vector class
   lineFromVector(vector) {
     // Handle bad arguments
-    if (!vector || !(vector instanceof Vector)) error("Invalid argument for Canvas lineFromVector method");
+    if (!vector || !(vector instanceof Vector))
+      error("Invalid argument for Canvas lineFromVector method");
     else {
       // Calculate line start and end point based on the vector information
       let x1 = vector.x;
@@ -353,7 +364,8 @@ class Canvas {
   // lineFromAngle method allows the user to draw a line based on an angle
   lineFromAngle(x, y, angle, length) {
     // Handle bad arguments
-    if (x === undefined) error("Invalid arguments for Canvas lineFromAngle method");
+    if (x === undefined)
+      error("Invalid arguments for Canvas lineFromAngle method");
     else {
       // Calculate lin end point based on the vector information
       let x1 = x;
@@ -374,7 +386,12 @@ class Canvas {
 
   // rect method allows the user to draw a rectangle on the canvas
   rect(x, y, width_, height_) {
-    if (x === undefined && y === undefined && width_ === undefined && height_ === undefined) {
+    if (
+      x === undefined &&
+      y === undefined &&
+      width_ === undefined &&
+      height_ === undefined
+    ) {
       // Handle bad arguments
       error("Invalid arguments for Canvas rect method");
     } else {
@@ -409,7 +426,8 @@ class Canvas {
   // rectMode method allows the user to change the rectangle drawing origin of the canvas
   rectMode(mode) {
     // Handle bad arguments
-    if (mode !== "center" && mode !== "corner") error("Invalid argument for Canvas rectMode method");
+    if (mode !== "center" && mode !== "corner")
+      error("Invalid argument for Canvas rectMode method");
     else this.rectDrawMode = mode;
   }
 
@@ -452,7 +470,13 @@ class Canvas {
 
   // arc method allows the user to draw an arc shape on the canvas
   arc(x, y, r, startAngle, endAngle) {
-    if (x === undefined || y === undefined || r === undefined || startAngle === undefined || endAngle === undefined) {
+    if (
+      x === undefined ||
+      y === undefined ||
+      r === undefined ||
+      startAngle === undefined ||
+      endAngle === undefined
+    ) {
       // Handle bad arguments
       error("Invalid arguments for Canvas arc method");
     } else {
@@ -476,7 +500,8 @@ class Canvas {
   // ellipse method allows the user to draw an ellipse on the canvas
   ellipse(x, y, width_, height_, rotation) {
     // Handle bad arguments
-    if (x === undefined || height === undefined) error("Invalid arguments for Canvas ellipse method");
+    if (x === undefined || height === undefined)
+      error("Invalid arguments for Canvas ellipse method");
     else {
       // Draw an ellipse based on the provided arguments
       let x1 = x;
@@ -495,7 +520,8 @@ class Canvas {
 
   // beginShape method allows the user to start a shape at the given coordinates; in conjunction with the vertext and closeShape methods
   beginShape(x, y) {
-    if (x === undefined) error("Invalid arguments for Canvas beginShape method");
+    if (x === undefined)
+      error("Invalid arguments for Canvas beginShape method");
     else {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -520,7 +546,13 @@ class Canvas {
   // text method allows the user to write text on the canvas
   text(text, x, y, fontSize, fontName) {
     // Handle bad arguments
-    if (text === undefined || x === undefined || y === undefined || fontSize === undefined || fontName === undefined)
+    if (
+      text === undefined ||
+      x === undefined ||
+      y === undefined ||
+      fontSize === undefined ||
+      fontName === undefined
+    )
       error("Invalid arguments for Canvas text method");
     else {
       // Write the text based on the given arguments
@@ -590,7 +622,9 @@ class Canvas {
     // Download the screenshot to the user's device
     let down = n + ".png";
     d.setAttribute("download", down);
-    d.href = this.canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, "data:application/octet-stream");
+    d.href = this.canvas
+      .toDataURL("image/png")
+      .replace(/^data:image\/[^;]/, "data:application/octet-stream");
     d.click();
   }
 
@@ -623,11 +657,24 @@ class Canvas {
   // drawImage method allows the user to drawn an image to the canvas
   drawImage(image, sx, sy, swidth, sheight, x, y, wid, heig) {
     // Handle bad arguments
-    if (image === undefined) error("Invalid arguments for Canvas drawImage method");
+    if (image === undefined)
+      error("Invalid arguments for Canvas drawImage method");
     else {
       if (swidth === undefined) this.ctx.drawImage(image.image, sx, sy);
-      else if (swidth !== undefined && sheight !== undefined && x === undefined) this.ctx.drawImage(image.image, sx, sy, swidth, sheight);
-      else if (heig !== undefined) this.ctx.drawImage(image.image, sx, sy, swidth, sheight, x, y, wid, heig);
+      else if (swidth !== undefined && sheight !== undefined && x === undefined)
+        this.ctx.drawImage(image.image, sx, sy, swidth, sheight);
+      else if (heig !== undefined)
+        this.ctx.drawImage(
+          image.image,
+          sx,
+          sy,
+          swidth,
+          sheight,
+          x,
+          y,
+          wid,
+          heig
+        );
     }
   }
 }
@@ -786,20 +833,23 @@ class Vector {
   // distance method allows the user to get the distance to another vector
   distance(vec2) {
     // Handle bad arguments
-    if (vec2 === undefined) error("You need to pass another vector to the Vector distance method");
+    if (vec2 === undefined)
+      error("You need to pass another vector to the Vector distance method");
     else return sqrt(sqr(this.x - vec2.x) + sqr(this.y - vec2.y));
   }
 
   // isOffScreen method allows the user to check if the vector is off the edges of the canvas
   isOffScreen() {
-    if (this.x >= width || this.x < 0 || this.y >= height || this.y < 0) return true;
+    if (this.x >= width || this.x < 0 || this.y >= height || this.y < 0)
+      return true;
     else return false;
   }
 
   // lerp method allows the user to lerp the vector towards another vector over time
   lerp(vec2, step) {
     // Handle bad arguments
-    if (vec2 === undefined || step === undefined) error("Invalid arguments for Vector lerp method");
+    if (vec2 === undefined || step === undefined)
+      error("Invalid arguments for Vector lerp method");
     else {
       this.x = lerp(this.x, vec2.x, step);
       this.y = lerp(this.y, vec2.y, step);
@@ -830,13 +880,20 @@ class Point {
 
   // distance method allows the user to get the distance to another point
   distance(pt2) {
-    if (pt2 === undefined) error("You need to pass another point to the Point distance method");
+    if (pt2 === undefined)
+      error("You need to pass another point to the Point distance method");
     else return sqrt(sqr(this.x - pt2.x) + sqr(this.y - pt2.y));
   }
 
   // isOffScreen method allows the user to check if the point is off the edges of the canvas
   isOffScreen() {
-    if (this.x >= canvas.width || this.x < 0 || this.y >= canvas.height || this.y < 0) return true;
+    if (
+      this.x >= canvas.width ||
+      this.x < 0 ||
+      this.y >= canvas.height ||
+      this.y < 0
+    )
+      return true;
     else return false;
   }
 }
@@ -992,7 +1049,11 @@ function distance(x1, y1, x2, y2) {
   else {
     // Check if the provided arguments are instances of Vector or Point methods
     if (x2 === undefined && y2 === undefined) {
-      if (x1 instanceof Vector || (x1 instanceof Point && y1 instanceof Vector) || y1 instanceof Point) {
+      if (
+        x1 instanceof Vector ||
+        (x1 instanceof Point && y1 instanceof Vector) ||
+        y1 instanceof Point
+      ) {
         return sqrt(sqr(x1.x - y1.x) + sqr(x1.y - y1.y));
       } else error("Invalid arguments for distance function");
     } else {
@@ -1036,7 +1097,8 @@ function randomPoint() {
 // isInArray function allows the user to check if the given element is inside the given array
 function isInArray(array, element) {
   // Handle bad arguments
-  if (array === undefined || element === undefined) error("Invalid arguments for isInArray function");
+  if (array === undefined || element === undefined)
+    error("Invalid arguments for isInArray function");
   else {
     for (let i = 0; i < array.length; i++) {
       if (array[i] === element) {
@@ -1050,7 +1112,8 @@ function isInArray(array, element) {
 // removeFromArray function allows the user to remvoe the given element from the given array
 function removeFromArray(array, element) {
   // Handle bad arguments
-  if (array === undefined || element === undefined) error("Invalid arguments for removeFromArray function");
+  if (array === undefined || element === undefined)
+    error("Invalid arguments for removeFromArray function");
   else {
     let i = isInArray(array, element);
     if (i === false) return;
@@ -1090,7 +1153,8 @@ function constrain(num, min, max) {
 // lerp function stands for linear interpolation; it slowly brings the first value to the second over time with the given step size
 function lerp(value1, value2, step) {
   // Handle bad arguments
-  if (value1 === undefined || value2 === undefined || step === undefined) error("Invalid arguments for lerp function");
+  if (value1 === undefined || value2 === undefined || step === undefined)
+    error("Invalid arguments for lerp function");
   else {
     return (1 - step) * value1 + step * value2;
   }
@@ -1181,9 +1245,11 @@ function random(num1, num2) {
 // randInt function returns a random integer between the given values
 function randInt(num1, num2) {
   // Handle bad arguments
-  if (num1 === undefined && num2 === undefined) error("At least one argument is needed for the randInt function");
+  if (num1 === undefined && num2 === undefined)
+    error("At least one argument is needed for the randInt function");
   // Return a random integer between the two numbers if two numbers are provided
-  else if (num2 !== undefined) return Math.floor(Math.random() * (num2 - num1) + num1);
+  else if (num2 !== undefined)
+    return Math.floor(Math.random() * (num2 - num1) + num1);
   // Return a random interger between 0 and the provided number if only one number is provided
   else return Math.floor(Math.random() * num1);
 }
@@ -1317,7 +1383,7 @@ function setText(element, text) {
 window.addEventListener("keydown", (e) => {
   if (typeof keyDown === "function") {
     keyCode = e.keyCode;
-    keyDown();
+    keyDown(keyCode);
   }
 });
 
@@ -1325,7 +1391,7 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
   if (typeof keyUp === "function") {
     keyCode = e.keyCode;
-    keyUp();
+    keyUp(keyCode);
   }
 });
 
@@ -1500,7 +1566,8 @@ function noCanvas() {
 // autoUpdate function allows the user to make a custom object automatically update each frame
 function autoUpdate(obj) {
   if (typeof obj === "object") updateable.push(obj);
-  else if (obj === undefined) print("The autoUpdate function requires an argument");
+  else if (obj === undefined)
+    print("The autoUpdate function requires an argument");
   else print("The autoUpdate function requires an object");
 }
 

@@ -141,9 +141,6 @@ class Canvas {
       document.body.appendChild(this.canvas);
     } else this.canvas = canvas_;
 
-    // Set the default canvas background color
-    this.background(0);
-
     // Update global variables
     width = this.width;
     height = this.height;
