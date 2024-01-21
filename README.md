@@ -38,7 +38,6 @@ PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired 
 - `map(num, a, b, c, d)` - takes a number that is in range from a to b numbers and maps it to the range from c to d
 - `random(num1, num2)` - returns a random number in the range of num1 to num2; if num2 is null, it returns a random number from 0 to num1, while never returning the maximum value; if both num1 and num2 are null, it returns a random number from 0 to 1; if an array is passed to the random function, it will return a random element from that array
 - `randInt(num1, num2)` - same as random(), except it returns a whole number; you must provide at least one argument
-- `randomizeColor(r, g, b)` - returns a random shade of the given color as an array of [red, green, blue] values
 - `floor(num)` - rounds the given number to the next lower integer
 - `ceil(num)` - rounds the given number to the next higher integer
 - `round(num)` - rounds the given number to the closest integer
@@ -52,7 +51,6 @@ PanvasJS is a JavaScript framework for the HTML canvas element heavily inspired 
 - `acos(num)` - returns the arcus cosine of the given number
 - `tan(angle)` - returns the tangent of the given angle
 - `atan(num)` - returns the arcus tangnet of the given number
-- `atan2(x, y)` - returns the arcus tangnet of the two given number
 - `exp(num)` - return E to the power of num
 - `log(num)` - returns the natural logarith of num with base E
 - `min(nums)` - returns the lowest of the numbers given; takes multiple numbers as input
@@ -220,8 +218,8 @@ A 2D Vector object
 - `set(newX, newY)` - changes vectors x and y coordinates to the given values
 - `add(vector2)` - adds the two vectors and changes x and y coordinates to the result ones
 - `subtract(vector2)` - subtracts the two vectors and changes x and y coordinates to the result ones
-- `multiply(vector2)` - multiplies the two vectors and changes x and y coordinates to the result ones
-- `divide(vector2)` - divides the two vectors and changes x and y coordinates to the result ones
+- `multiply(num)` - multiplies the two vectors and changes x and y coordinates to the result ones
+- `divide(num)` - divides the two vectors and changes x and y coordinates to the result ones
 - `angle()` - returns the angle of the vector in relation to the x axis
 - `rotate(angle)` - rotates the vector by the given angle
 - `magintude()` - returns the magnitude (length) of the vector
