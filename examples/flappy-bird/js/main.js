@@ -39,6 +39,6 @@ function restart() {
 
 // The keyDown function is called by PanvasJS every time a key is pressed
 // If the key is the space button, make the bird jump
-function keyDown() {
+function keyDown(keyCode) {
   if (keyCode === KEY.SPACE) bird.jump();
 }

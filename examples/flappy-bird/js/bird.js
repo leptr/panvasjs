@@ -24,8 +24,14 @@ class Bird {
   // The collide method detects if the bird has collided with the provided pipe
   // Only one pipe can be on the screen at one given time, so we are detecting the collision with the global pipe variable
   collide() {
-    if (this.position.x + this.radius >= pipe.x && this.position.x - this.radius <= pipe.x + pipe.width) {
-      if (this.position.y - this.radius <= pipe.y || this.position.y + this.radius >= pipe.y + pipe.height) {
+    if (
+      this.position.x + this.radius >= pipe.x &&
+      this.position.x - this.radius <= pipe.x + pipe.width
+    ) {
+      if (
+        this.position.y - this.radius <= pipe.y ||
+        this.position.y + this.radius >= pipe.y + pipe.height
+      ) {
         // Call the global restart function if the bird has collided with a pipe
         restart();
       }
@@ -48,7 +54,8 @@ class Bird {
     this.collide();
 
     // Constrain the bird within the canvas height
-    if (this.position.y + this.radius >= height) this.position.y = height - this.radius;
+    if (this.position.y + this.radius >= height)
+      this.position.y = height - this.radius;
     else if (this.position.y - this.radius <= 0) this.position.y = this.radius;
 
     // Check if the bird has successfully passed the pipe and increase the score

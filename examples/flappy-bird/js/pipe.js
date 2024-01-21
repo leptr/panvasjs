@@ -19,7 +19,12 @@ class Pipe {
     // Draw the top of the pipe at the pipe position
     canvas.rect(this.x, 0, this.width, this.y);
     // Draw the bottom of the pipe 150 pixels below the top pipe
-    canvas.rect(this.x, this.y + this.height, this.width, height - this.y - this.height);
+    canvas.rect(
+      this.x,
+      this.y + this.height,
+      this.width,
+      height - this.y - this.height
+    );
   }
 
   // The update method handles the pipe movement
