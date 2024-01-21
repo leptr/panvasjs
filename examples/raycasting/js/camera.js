@@ -23,7 +23,8 @@ class Camera {
     this.rays = [];
 
     // Creat all of the rays that originate from teh camera with above defined parameters
-    for (let i = -(this.fov / 2); i < this.fov / 2; i += 1 / this.division) this.rays.push(new Ray(this.pos.x, this.pos.y, i));
+    for (let i = -(this.fov / 2); i < this.fov / 2; i += 1 / this.division)
+      this.rays.push(new Ray(this.pos.x, this.pos.y, i));
   }
 
   // The draw method draws all of the rays from the camera to display them on the canvas

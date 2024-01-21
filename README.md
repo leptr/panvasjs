@@ -256,7 +256,7 @@ A color class
 To create a new PanvasJS project you can clone one of the templates from the examples folder. The offline template is self-contained and all the script files come with it, whereas the other template uses the online version of the file and uses the latest version by default.
 
 You can also implement the files into your existing project by dowloading the script file or adding it through the CDN. The URL for the CDN is as follows:\
- https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.js for the regular version, or https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.min.js for the min version \
+ https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.min.js for the regular version, or https://cdn.jsdelivr.net/gh/leptr/panvasjs/panvas.min.js for the min version \
 To use the latest version, add the following line of code into your head tag
 
 ```
